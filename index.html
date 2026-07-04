@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rio — One food list, matched to everything you react to</title>
+<meta name="description" content="Rio helps you understand your personal tolerance to food chemicals — histamine, FODMAPs, lactose, gluten, salicylates, oxalates, sulfur — and builds a color-coded food list that keeps up as your body changes.">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/app/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/app/favicon-64.png">
+<link rel="apple-touch-icon" href="/assets/app/apple-touch-icon.png">
+<link rel="canonical" href="https://riofoodplan.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Rio">
+<meta property="og:title" content="Rio — One food list, matched to everything you react to">
+<meta property="og:description" content="Understand your intolerances and find the foods that work for your body. A short quiz screens 7 food chemicals and builds a color-coded list of 500+ whole foods.">
+<meta property="og:url" content="https://riofoodplan.com/">
+<meta property="og:image" content="https://riofoodplan.com/assets/app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rio — One food list, matched to everything you react to">
+<meta name="twitter:description" content="Understand your intolerances and find the foods that work for your body. A short quiz screens 7 food chemicals and builds a color-coded list of 500+ whole foods.">
+<meta name="twitter:image" content="https://riofoodplan.com/assets/app/og-image.png">
+<script type="text/javascript" charset="UTF-8" src="https://cookie-script.com/s/33f252d2696c26ea96323f355382a3fb.js"></script>
+<!-- GA4 (G-BCPC4NGBF8) — blocked until CookieScript "performance" consent -->
+<script type="text/plain" data-cookiescript="accepted" data-cookiecategory="performance" src="https://www.googletagmanager.com/gtag/js?id=G-BCPC4NGBF8"></script>
+<script type="text/plain" data-cookiescript="accepted" data-cookiecategory="performance">
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-BCPC4NGBF8', { anonymize_ip: true });
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600&family=Caveat:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFDF8;
+  --brand:#D4882A;
+  --brand-light:#F5D4A3;
+  --text:#54453A;
+  --text-muted:#7A6B5E;
+  --text-placeholder:#A89B8E;
+  --green:#A7CE67;
+  --green-deep:#8DAD45;
+  --yellow:#EBD573;
+  --yellow-deep:#DEBB50;
+  --red:#D95E34;
+  --red-deep:#D45838;
+  --surface:#FFFFFF;
+  --surface-2:#F5F2ED;
+  --circle:#F0E8DA;
+  --border:#E8E2DA;
+  --olive:#8DAD45;
+  --serif:'Bitter',Georgia,serif;
+  --sans:'Source Sans 3',-apple-system,sans-serif;
+  --shadow-raised:0 2px 8px rgba(84,69,58,.06);
+  --shadow-lifted:0 4px 20px rgba(84,69,58,.09);
+  --shadow-overlay:0 12px 40px rgba(84,69,58,.14);
+  --r-lg:20px;
+  --r-xl:24px;
+  --r-xxl:28px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--brand-light);color:var(--text)}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+/* ----- shared type ----- */
+.kicker{
+  font-family:var(--sans);font-weight:600;font-size:13px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--text-placeholder);
+  display:inline-flex;align-items:center;gap:10px;
+}
+.kicker::before{content:"";width:22px;height:2px;background:var(--text-placeholder);border-radius:2px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em}
+h1{font-size:clamp(40px,5.6vw,64px)}
+h2{font-size:clamp(30px,4vw,44px)}
+em.accent{font-style:italic;font-weight:600}
+em.accent.red{color:var(--red-deep)}
+em.accent.yellow{color:#D9A93C}
+em.accent.olive{color:var(--olive)}
+em.accent.brand{color:var(--brand)}
+.lede{color:var(--text-muted);font-size:clamp(17px,1.6vw,19px);line-height:1.6}
+
+/* ----- reveal on scroll ----- */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.6,.2,1),transform .8s cubic-bezier(.2,.6,.2,1)}
+.rv.in{opacity:1;transform:none}
+.br-m{display:none}
+@media(max-width:880px){.br-m{display:inline}}
+.rv-d1{transition-delay:.1s}.rv-d2{transition-delay:.2s}.rv-d3{transition-delay:.3s}
+@media (prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  .marquee-track{animation:none!important}
+  .dotfield span{animation:none!important}
+}
+
+/* ----- nav ----- */
+nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,253,248,.85);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(232,226,218,.6);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-mark{
+  width:34px;height:34px;border-radius:50%;background:var(--brand);
+  display:grid;place-items:center;
+  font-family:var(--serif);font-style:italic;font-weight:600;font-size:17px;color:var(--bg);
+  padding-bottom:2px;
+}
+.logo-mark-img{width:44px;height:44px;display:block}
+.logo-word{font-family:var(--serif);font-style:italic;font-weight:600;font-size:22px}
+.nav-links{display:flex;gap:28px;align-items:center;font-size:15px;font-weight:500;color:var(--text-muted)}
+.nav-links a{text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{
+  background:var(--text);color:var(--bg)!important;padding:11px 20px;border-radius:13px;
+  font-weight:600;transition:transform .15s,opacity .15s;
+}
+.nav-cta:hover{transform:scale(.98);opacity:.9}
+@media(max-width:720px){.nav-links a:not(.nav-cta){display:none}}
+
+/* ----- app store badge ----- */
+.appstore{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--text);color:var(--bg);text-decoration:none;
+  padding:8px 26px 8px 20px;border-radius:10px;
+  transition:transform .15s ease,box-shadow .2s;
+  box-shadow:var(--shadow-raised);
+}
+.appstore:hover{transform:scale(.975);box-shadow:var(--shadow-lifted)}
+.appstore svg{width:22px;height:26px;flex-shrink:0}
+.appstore .as-text{display:flex;flex-direction:column;line-height:1.12;text-align:left}
+.appstore .as-small{font-size:10.5px;font-weight:400;opacity:.8;letter-spacing:.02em}
+.appstore .as-big{font-family:var(--sans);font-size:19px;font-weight:600;letter-spacing:.01em}
+.cta-note{font-size:13px;color:var(--text-placeholder);margin-top:12px}
+
+/* ----- hero (honey field — mirrors Library's NutrientsHeroCard) ----- */
+:root{
+  --honey:#DCA62F;        /* field */
+  --honey-light:#EFC668;  /* dot tone */
+  --honey-dark:#A87A14;   /* dot tone + shadows */
+  --honey-cream:#FFF8EC;  /* headline + dot tone */
+  --honey-ink:#6B4D0E;    /* eyebrow / secondary on honey */
+}
+.hero{
+  position:relative;overflow:hidden;
+  background:var(--bg);
+  /* phone (760px tall) overflows the band by (760 - bandH)/2 on each side;
+     pad so the phone top sits 8px under the nav hairline, 26px cream below */
+  padding-top:calc(30px + (724px - clamp(566px,48vw,672px))/2);
+  padding-bottom:calc(26px + (724px - clamp(566px,48vw,672px))/2);
+  text-align:left;
+}
+/* full-bleed orange band — edge to edge, NO side rounding — sitting UNDER the phone,
+   shorter than the phone so the phone's top & bottom (~15%) land on the cream */
+.hero-band{
+  position:relative;
+  background:var(--honey);
+  width:100%;height:clamp(566px,48vw,672px);
+  display:flex;align-items:center;
+}
+.hero-bandclip{position:absolute;inset:0;overflow:hidden;z-index:0}
+.hero-stage{position:relative;z-index:2;width:100%}
+.honey-field{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.honey-glow{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(120% 90% at 82% 6%, rgba(255,248,236,.22), rgba(220,166,47,0) 60%);
+}
+.honey-vignette{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg, rgba(220,166,47,.20), rgba(220,166,47,0) 42%, rgba(220,166,47,.16));
+}
+.hero-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:flex-start;max-width:54%}
+.hero-kicker{color:var(--honey-cream)}
+.hero-kicker::before{background:var(--honey-cream)}
+.hero-h1{
+  color:var(--honey-cream);margin:16px 0 16px;max-width:680px;
+  text-shadow:0 2px 10px rgba(124,86,12,.30);
+}
+.hero-h1 em{font-style:italic;font-weight:600;color:var(--honey-cream)}
+.hero-lede{color:var(--honey-cream);opacity:.95;max-width:560px;margin-bottom:54px}
+.hero-cta-wrap{display:flex;flex-direction:column;align-items:flex-start;margin-bottom:28px}
+.hero-note{color:var(--honey-cream);opacity:.85}
+.hero-grid2{position:relative;z-index:2;display:grid;grid-template-columns:1.02fr .98fr;gap:48px;align-items:center}
+/* phone is laid OVER the band on the right, taller than the band so it sticks out top + bottom onto the cream */
+.hero-phone{position:absolute;top:50%;right:clamp(8px,3vw,52px);transform:translateY(-50%);z-index:3}
+.hero .phone{width:350px}
+.hero .screen{height:700px}
+@media(max-width:880px){
+  .hero{display:block;padding:0}
+  .hero-band{height:auto;padding:46px 0 40px}
+  .hero-stage{display:flex;flex-direction:column;align-items:center;text-align:center}
+  .hero-inner{max-width:none;align-items:center}
+  .hero-kicker{align-self:center}
+  .hero-cta-wrap{align-items:center}
+  .hero-h1,.hero-lede{margin-left:auto;margin-right:auto}
+  .hero-phone{position:static;transform:none;display:flex;justify-content:center;align-items:flex-start;margin-top:30px;height:652px;overflow:visible}
+  .hero .phone{width:312px}
+  .hero .screen{height:620px;text-align:left}
+}
+
+/* ----- phone mockup ----- */
+.phone-stage{position:relative;display:flex;justify-content:center}
+.phone{
+  width:312px;border-radius:52px;background:#3E332B;padding:12px;
+  box-shadow:0 30px 70px rgba(84,69,58,.25),0 4px 14px rgba(84,69,58,.12);
+  position:relative;z-index:2;
+}
+.screen{
+  background:var(--bg);border-radius:42px;overflow:hidden;
+  height:620px;display:flex;flex-direction:column;position:relative;
+  /* WebKit: keep border-radius clipping alive inside transform:scale (iOS bleed bug) */
+  isolation:isolate;transform:translateZ(0);
+}
+.statusbar{display:flex;justify-content:space-between;padding:14px 26px 4px;font-size:13px;font-weight:600}
+.screen-pad{padding:10px 18px 0}
+.screen-title{font-family:var(--serif);font-weight:600;font-size:21px;margin:6px 0 14px}
+.stats{display:flex;gap:18px;margin-bottom:14px}
+.stat{flex:1;display:flex;flex-direction:column;gap:1px}
+.stat-num{display:flex;align-items:center;gap:7px}
+.stat .dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;padding:0}
+.stat b{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--text);line-height:1.1}
+.stat .stat-lbl{font-size:10.5px;color:var(--text-muted);padding-left:18px;white-space:nowrap}
+.triggers{
+  background:var(--surface);border-radius:16px;padding:12px 14px;margin-bottom:12px;
+  box-shadow:var(--shadow-raised);
+}
+.triggers small{font-size:9.5px;letter-spacing:.14em;font-weight:600;color:var(--text-placeholder)}
+.pills{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:7px}
+.pill{font-weight:500;font-size:14px;position:relative;padding-bottom:5px}
+.pill::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;border-radius:3px;background:var(--bar)}
+.search-mock{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(245,242,237,.6);border-radius:11px;
+  padding:9px 12px;margin-bottom:8px;
+  font-size:12.5px;color:var(--text-placeholder);
+}
+.search-mock svg{width:13px;height:13px;stroke:var(--text-placeholder);flex-shrink:0}
+.foodlist{flex:1;overflow:hidden;padding:0 18px;position:relative}
+.foodlist-track{display:flex;flex-direction:column;animation:foodscroll 20s linear infinite;will-change:transform}
+.foodlist-track:hover{animation-play-state:paused}
+@keyframes foodscroll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+@media (prefers-reduced-motion:reduce){.foodlist-track{animation:none}}
+.frow{
+  padding:8px 2px;
+  display:flex;align-items:center;gap:10px;
+}
+.frow .tol{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.frow img.pic{
+  width:40px;height:40px;object-fit:contain;flex-shrink:0;
+}
+.frow .nm{font-family:var(--sans);font-weight:400;font-size:13.5px;color:var(--text);flex:1}
+.badges{display:flex;gap:4px;align-items:center;justify-content:center;width:58px;flex-shrink:0}
+.bdg{
+  width:16px;height:16px;border-radius:50%;color:#fff;
+  font-size:11px;font-weight:700;line-height:1;display:grid;place-items:center;
+}
+.leafb{width:16px;height:16px;flex-shrink:0;background:var(--green);border-radius:50%;padding:3px;box-sizing:border-box}
+.frow .plus{flex-shrink:0;color:var(--text-placeholder);opacity:.7}
+.frow .plus svg{width:13px;height:13px;stroke:currentColor;stroke-width:1.8;display:block}
+.screen-fade{
+  position:absolute;left:0;right:0;bottom:0;height:90px;
+  background:linear-gradient(transparent,var(--bg));pointer-events:none;
+}
+/* floating chips around phone */
+.float-chip{
+  position:absolute;z-index:3;background:var(--surface);border-radius:999px;
+  padding:9px 16px;font-size:14px;font-weight:500;box-shadow:var(--shadow-lifted);
+  display:flex;align-items:center;gap:8px;white-space:nowrap;
+  animation:bob 5.5s ease-in-out infinite alternate;
+}
+.float-chip .dot{width:9px;height:9px;border-radius:50%}
+@keyframes bob{from{transform:translateY(-5px)}to{transform:translateY(7px)}}
+.fc1{top:11%;right:calc(50% + 148px);animation-delay:.4s}
+.fc2{top:40%;left:calc(50% + 148px);animation-delay:1.4s}
+.fc3{bottom:16%;right:calc(50% + 132px);animation-delay:.9s}
+@media(max-width:880px){
+  .fc1{right:auto;left:6px;top:-18px}
+  .fc3{right:auto;left:0;bottom:4%}
+  .fc2{left:auto;right:0;top:36%}
+}
+@media(max-width:380px){.phone{width:290px}.screen{height:580px}}
+
+/* ----- marquee ----- */
+.marquee-zone{padding:64px 0 8px;border-top:1px solid var(--border)}
+.marquee{overflow:hidden;position:relative;padding:10px 0;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+}
+.marquee-track{display:flex;align-items:center;gap:0;width:max-content;animation:scroll 38s linear infinite}
+.marquee.reverse .marquee-track{animation:scroll-r 32s linear infinite}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes scroll-r{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.m-item{
+  font-family:var(--serif);font-style:italic;font-size:clamp(19px,2.3vw,26px);
+  color:var(--text-muted);white-space:nowrap;
+}
+/* round separator dot, centered between phrases — same size in both strips, colors cycle */
+.m-sep{width:9px;height:9px;border-radius:50%;margin:0 26px;flex-shrink:0;align-self:center}
+/* chemical strip — same serif + size as the symptoms strip, but NOT italic */
+.m-chem{font-style:normal}
+
+/* ----- how it works (pinned ball that recolors red→yellow→green, Atoms "why different" style) ----- */
+.how{padding:0}
+.how-head{max-width:560px;margin:0 0 44px}
+.how-head h2{margin-top:18px}
+
+.how-scroll{position:relative;height:300vh}
+.how-pin{position:sticky;top:0;height:100vh;display:flex;align-items:center;overflow:hidden}
+/* heading + 3-step stage held together as one centred group while pinned */
+.how-pin-inner{display:flex;flex-direction:column;justify-content:center}
+/* progress rail · colored ball (as the main bullet) · large text */
+.how-stage{display:grid;grid-template-columns:auto auto minmax(0,500px);justify-content:center;align-items:center;column-gap:30px;width:100%}
+
+/* left vertical progress — small dots: always two grey, one orange (the current step) */
+.how-prog{display:flex;flex-direction:column;gap:12px}
+.pdot{width:8px;height:8px;border-radius:50%;background:var(--chip-grey,#D9D3CB);transition:background .35s ease}
+.pdot.on{background:var(--brand)}
+
+/* large left text, crossfading per step */
+.how-titles{position:relative;min-height:210px}
+.how-titles > div{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;opacity:0;transform:translateY(16px);transition:opacity .45s ease,transform .45s ease;pointer-events:none}
+.how-titles > div.active{opacity:1;transform:none;pointer-events:auto}
+.how-titles h3{font-family:var(--sans);font-weight:600;font-size:clamp(28px,3.4vw,42px);color:var(--text);margin:0 0 16px;line-height:1.18;max-width:13ch}
+.how-titles p{color:var(--text-muted);font-size:clamp(16px,1.5vw,18px);max-width:420px;line-height:1.6}
+
+/* the ball — solid colour (paler, ~75%), acts as the main bullet left of the text; morphs per step */
+.how-ball{position:relative;width:168px;height:168px;border-radius:50%;box-shadow:0 14px 38px rgba(84,69,58,.15)}
+.how-ball::before{content:"";position:absolute;inset:0;border-radius:50%;background:var(--ball);opacity:.75;transition:background .6s ease}
+.ball-num{position:absolute;inset:0;z-index:1;display:grid;place-items:center;font-family:var(--sans);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;font-size:82px;color:#FFF8EC;text-shadow:0 3px 12px rgba(40,30,10,.22);opacity:0;transition:opacity .45s ease}
+.ball-num.active{opacity:1}
+
+@media(max-width:880px){
+  .how-scroll{height:280vh}
+  .how-pin{align-items:center}
+  .how-stage{grid-template-columns:1fr;justify-items:center;gap:32px;text-align:center}
+  .how-prog{flex-direction:row;order:-1}
+  .how-titles{min-height:170px;order:2;width:100%}
+  .how-titles > div{align-items:center}
+  .how-titles h3{max-width:none}
+  .how-titles p{margin:0 auto}
+  .how-ball{width:144px;height:144px;order:1}
+  .ball-num{font-size:72px}
+}
+@media (prefers-reduced-motion:reduce){
+  .how-scroll{height:auto}
+  .how-pin{position:static;height:auto;display:block;padding:48px 0 80px}
+  .how-titles{position:relative;min-height:0}
+  .how-titles > div{position:relative;opacity:1;transform:none}
+  .how-titles > div:not(.active){display:none}
+}
+
+/* ----- how it works — horizontal duplicate (Atoms carousel, pale-green field) ----- */
+.atoms{background:#EEF3E2;padding:92px 0 88px;overflow:hidden}
+.atoms .how-head{max-width:660px;margin:0 0 60px}
+.atoms-viewport{overflow:hidden}
+.atoms-track{display:flex;gap:64px;will-change:transform;transition:transform .6s cubic-bezier(.2,.65,.2,1)}
+.astep{flex:0 0 auto;display:flex;align-items:center;gap:26px}
+.anum{position:relative;font-family:var(--sans);font-weight:700;font-variant-numeric:tabular-nums;font-size:150px;line-height:1;color:var(--mk);padding:0 22px;flex-shrink:0}
+.ring{position:absolute;left:50%;top:50%;width:175px;height:160px;transform:translate(-50%,-50%) rotate(-4deg);opacity:0;transition:opacity .45s ease}
+.astep.active .ring{opacity:1}
+.ring path{fill:none;stroke:var(--mk);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.astep h3{font-family:var(--sans);font-weight:700;font-size:clamp(30px,3.2vw,44px);color:var(--text);max-width:9ch;line-height:1.08;margin:0}
+.astep:not(.active){opacity:.85}
+.atoms-nav{display:flex;gap:14px;justify-content:flex-end;margin-top:44px}
+.anav{width:56px;height:56px;border-radius:50%;border:1px solid var(--border);background:var(--surface);display:grid;place-items:center;cursor:pointer;transition:transform .15s,opacity .2s,background .2s}
+.anav svg{width:20px;height:20px;stroke:var(--text);stroke-width:2;fill:none}
+.anav:hover:not(:disabled){background:var(--brand);}
+.anav:hover:not(:disabled) svg{stroke:#fff}
+.anav:active:not(:disabled){transform:scale(.94)}
+.anav:disabled{opacity:.35;cursor:default}
+@media(max-width:880px){
+  .anum{font-size:104px;padding:0 14px}
+  .ring{width:124px;height:114px}
+  .astep h3{font-size:26px}
+  .atoms-track{gap:40px}
+}
+
+/* the seven chemicals — underlined words band (kept from "Option 3", placed lower) */
+.chem-band{padding:8px 0 64px;text-align:center}
+.chem-band .kicker{justify-content:center;margin-bottom:24px}
+.cv-type{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 26px;max-width:760px;margin:0 auto}
+.cv-type span{position:relative;font-family:var(--serif);font-size:clamp(22px,2.6vw,30px);color:var(--text);padding-bottom:6px}
+.cv-type span::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;border-radius:3px;background:var(--c)}
+
+
+/* ----- features ----- */
+.features{padding:30px 0 60px}
+.feature{
+  display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;
+  padding:64px 0;
+}
+.feature:nth-child(even) .f-visual{order:-1}
+.f-copy .kicker{margin-bottom:16px}
+.f-copy h2{font-size:clamp(26px,3vw,36px);margin-bottom:16px}
+.f-copy p{color:var(--text-muted);max-width:440px}
+.f-visual{display:flex;justify-content:center}
+@media(max-width:880px){
+  .feature{grid-template-columns:1fr;gap:36px;padding:48px 0}
+  .feature:nth-child(even) .f-visual{order:0}
+}
+/* feature mini-cards */
+.mini{
+  background:var(--surface);border-radius:var(--r-xxl);padding:28px;
+  box-shadow:var(--shadow-overlay);width:min(400px,100%);
+  position:relative;
+}
+.mini::before{
+  content:"";position:absolute;inset:auto -28px -28px auto;width:130px;height:130px;
+  border-radius:50%;background:var(--halo,var(--circle));opacity:.5;z-index:-1;
+}
+.mini-title{font-family:var(--serif);font-weight:600;font-size:20px;margin-bottom:4px}
+.mini-sub{font-size:13px;color:var(--text-muted);margin-bottom:18px}
+/* tolerance levels */
+.levels{display:flex;justify-content:space-between;gap:12px;margin:18px 0 14px}
+.lvl{font-size:11.5px;font-weight:600;letter-spacing:.08em;color:var(--text-placeholder);padding-bottom:8px;position:relative;white-space:nowrap}
+.lvl.sel{color:var(--text);font-size:13px}
+@media(max-width:400px){.lvl{font-size:10px;letter-spacing:.05em}.lvl.sel{font-size:11.5px}}
+.lvl.sel::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;border-radius:4px;background:#E8A84C}
+.mini .rule{font-size:14px;color:var(--text-muted);text-align:center;background:var(--surface-2);border-radius:14px;padding:12px 16px}
+/* nutrients — mirrors NutrientFoodRow: dot + thumb + name + tier label */
+.nut{display:flex;flex-direction:column}
+.nrow{display:flex;align-items:center;gap:11px;padding:8px 0}
+.nrow .tol{width:13px;height:13px;border-radius:50%;flex-shrink:0}
+.nrow .pic{width:40px;height:40px;object-fit:contain;flex-shrink:0}
+.nrow .nname{font-size:15px;color:var(--text);flex:1}
+.nrow .nsrc{font-size:12.5px;color:var(--text-muted);white-space:nowrap}
+/* note card */
+.notefood{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.notefood .pic{width:44px;height:44px;object-fit:contain}
+.notefood .nm{font-family:var(--serif);font-weight:600;font-size:17px}
+.notefood .cat{font-size:12.5px;color:var(--text-muted)}
+.notebubble{
+  background:var(--circle);border-radius:16px 16px 16px 4px;padding:14px 16px;
+  font-size:15px;font-style:italic;color:var(--text);line-height:1.5;
+}
+.notebubble+.notebubble{margin-top:10px;border-radius:16px 16px 16px 4px}
+.notedate{font-size:11.5px;color:var(--text-placeholder);margin-top:6px}
+/* organic rows */
+.orow{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--surface-2)}
+.orow:last-child{border-bottom:none}
+.orow .pic{width:40px;height:40px;object-fit:contain}
+.orow .nm{font-family:var(--serif);font-weight:600;font-size:15.5px;flex:1}
+.leaf-badge{
+  display:inline-flex;align-items:center;gap:5px;background:#EEF3E0;color:#6E8C36;
+  font-size:11.5px;font-weight:600;border-radius:999px;padding:4px 10px;
+}
+.leaf-badge svg{width:11px;height:11px}
+
+/* ----- features — Atoms-style: green CARD with floating dots, phone overlaps it (sticks out top/bottom) ----- */
+.feat3{background:var(--bg);color:#FFF8EC;position:relative}
+.feat3-scroll{position:relative;height:400vh}
+.feat3-pin{position:sticky;top:0;height:100vh;display:flex;align-items:flex-start;padding-top:92px}
+.feat3-stage{position:relative;width:100%}
+.feat3-screen .fdc{flex:none;margin-bottom:6px}
+.fdc-nut .fdc-h{margin-bottom:10px}
+.fdc-grp{font-size:11px;font-weight:600;color:var(--text);text-align:center;margin:5px 0 0}
+.bdg--mut{background:#B8B0A4}
+.nutpills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.nutpills span{background:var(--surface-2);border-radius:999px;padding:7px 14px;font-size:12.5px;font-weight:600;color:var(--text)}
+.feat3-head2{margin-bottom:92px}
+.feat3-head2--out{display:none}
+.feat3-sub{font-family:var(--sans);font-weight:400;font-size:clamp(18px,1.8vw,22px);line-height:1.5;color:var(--text-muted);margin-top:14px;max-width:560px}
+/* the contained green band */
+.feat3-card{position:relative;background:#7E9140;border-radius:var(--r-xxl);height:460px}
+.feat3-cardclip{position:absolute;inset:0;border-radius:var(--r-xxl);overflow:hidden;z-index:0}
+.feat3-dots{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+/* phone overlaps the card: slightly left of centre, taller than the card so it sticks out top + bottom */
+.feat3-phone{position:absolute;top:50%;left:35%;transform:translate(-50%,-50%);z-index:2}
+.feat3 .phone{width:300px;transform:none}
+.feat3 .screen{height:596px}
+.feat3-screens{position:relative;flex:1;overflow:hidden;color:var(--text)}
+.feat3-screen{position:absolute;inset:0;padding:12px 18px 0;display:flex;flex-direction:column;background:var(--bg);opacity:0;transition:opacity .32s ease}
+.feat3-screen.active{opacity:1;z-index:1}
+.f3s-title{font-family:var(--serif);font-weight:600;font-size:21px;color:var(--text);margin:6px 2px 2px}
+.f3s-sub{font-size:12.5px;color:var(--text-muted);margin:0 2px 16px}
+.feat3-screen .nut{margin-top:4px}
+.f3s-addnote{display:inline-flex;align-items:center;gap:7px;margin-top:16px;font-size:14px;font-weight:600;color:var(--text);background:var(--surface-2);border-radius:12px;padding:11px 16px;align-self:flex-start}
+.f3s-addnote svg{width:13px;height:13px}
+/* tighten the reused rows so they fit the narrower (262px) phone screen */
+.feat3 .nrow{gap:9px}
+.feat3 .nrow .pic,.feat3 .orow .pic{width:34px;height:34px}
+.feat3 .nrow .nname{font-size:14px}
+.feat3 .nrow .nsrc{font-size:11px}
+.feat3 .orow{gap:9px}
+.feat3 .orow .nm{font-size:14px}
+.feat3 .leaf-badge{font-size:10px;padding:3px 7px;gap:4px}
+.feat3 .leaf-badge svg{width:10px;height:10px}
+/* phone screen 0 — NutrientDetailScreen (eyebrow + title + desc + where-to-get) */
+.ndt-eyebrow{font:600 11px/1 var(--sans);letter-spacing:1.6px;color:var(--text-muted);text-transform:uppercase;margin:2px 2px 0}
+.ndt-title{font-family:var(--serif);font-weight:600;font-size:24px;color:var(--text);margin:8px 2px 0}
+.ndt-desc{font-size:12px;line-height:1.5;color:var(--text-muted);margin:9px 2px 0;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.ndt-h{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--text);margin:16px 2px 2px}
+.ndt-sub{font-size:11.5px;color:var(--text-muted);margin:0 2px 8px}
+.ndt-showall{align-self:center;margin-top:10px;font-size:13px;font-weight:600;color:var(--text);background:var(--surface-2);border-radius:11px;padding:9px 18px}
+/* phone screen 1 — FoodDetailSheet "My notes" card */
+.fd-head{display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:6px;margin-bottom:14px}
+.fd-circle{width:74px;height:74px;border-radius:50%;background:var(--cc,#7DB048);display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.fd-circle img{width:54px;height:54px;object-fit:contain}
+.fd-name{font-family:var(--serif);font-weight:600;font-size:19px;color:var(--text)}
+.fd-cat{font-size:12.5px;color:var(--text-muted);margin-top:2px}
+.mynotes{background:var(--surface);border-radius:18px;box-shadow:0 2px 10px rgba(0,0,0,.05);padding:14px 14px 16px}
+.mynotes-h{font-family:var(--serif);font-weight:600;font-size:16px;color:var(--text);text-align:center;margin-bottom:8px}
+.note-row{display:flex;align-items:flex-start;gap:8px;padding:10px 0}
+.note-body{flex:1;min-width:0}
+.note-txt{font-size:13px;line-height:1.45;color:var(--text)}
+.note-date{font-size:11px;color:var(--text-muted);margin-top:4px}
+.note-ic{flex:none;width:24px;height:24px;border-radius:50%;background:rgba(240,232,218,.6);color:var(--text-muted);display:flex;align-items:center;justify-content:center}
+.note-ic svg{width:13px;height:13px}
+.note-div{height:1px;background:var(--border)}
+.note-add{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-size:13.5px;font-weight:600;color:var(--text);background:var(--surface-2);border-radius:11px;padding:9px 14px}
+/* phone screen 3 — History (olive header + pills, beige summary, white card of text rows) */
+.feat3-screen--hist{padding:0}
+.hh{position:relative;background:#7E9140;padding:26px 16px 14px;overflow:hidden}
+.hh::before{content:"";position:absolute;inset:0;background:radial-gradient(90% 70% at 85% 0%, rgba(255,248,236,.18), rgba(126,145,64,0) 60%)}
+.hd{position:absolute;border-radius:50%;background:#FFF8EC}
+.hh-t{position:relative;font-family:var(--serif);font-weight:600;font-size:26px;color:#FFF8EC}
+.hh-pills{position:relative;display:flex;gap:6px;margin-top:12px;justify-content:center}
+.hh-pills span{font-size:10.5px;font-weight:600;color:rgba(255,248,236,.9);border:1px solid rgba(255,248,236,.45);border-radius:999px;padding:5px 11px;white-space:nowrap}
+.hh-pills span.on{background:#FFF8EC;color:#5C6B2E;border-color:#FFF8EC}
+.hist-body{padding:10px 14px 0}
+.msum{background:var(--surface-2);border-radius:16px;padding:12px 14px;margin-bottom:10px}
+.msum-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.msum-month{font:600 11px var(--sans);letter-spacing:1.4px;text-transform:uppercase;color:#B5A892}
+.msum-q{width:19px;height:19px;border-radius:50%;background:var(--text);color:var(--bg);font:600 11px/19px var(--sans);text-align:center}
+.msum-row{display:flex;gap:16px;align-items:center}
+.msum-item{display:flex;align-items:baseline;gap:5px}
+.msum-item i{width:10px;height:10px;border-radius:50%;align-self:center}
+.msum-item b{font-size:16px;color:var(--text)}
+.msum-item em{font-style:normal;font-size:11px;color:var(--text-muted)}
+.msum-chev{width:13px;height:13px;color:var(--text-muted);margin-left:auto}
+.hist-day{font:600 11px var(--sans);letter-spacing:1.4px;text-transform:uppercase;color:#B5A892;margin:10px 2px 6px}
+.hcard{background:var(--surface);border-radius:16px;box-shadow:0 2px 10px rgba(0,0,0,.05);padding:2px 14px}
+.hrow{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--surface-2)}
+.hrow:last-child{border-bottom:none}
+.hist-tx{flex:1;min-width:0}
+.hist-t{display:block;font-size:14px;font-weight:600;color:var(--text)}
+.hist-d{display:block;font-size:12px;color:var(--text-muted);margin-top:2px}
+.hdots{display:flex;align-items:center;gap:6px;margin-top:5px;color:var(--text-placeholder)}
+.hdots i{width:11px;height:11px;border-radius:50%}
+.hdots svg{width:11px;height:11px}
+.hist-time{font-size:11px;color:var(--text-placeholder);flex:none;margin-top:2px}
+/* Notes = the real "Add note" bottom-sheet popup over the food list */
+.feat3-screen--popup{padding:0;background:var(--bg);overflow:hidden}
+.anp-bg{position:absolute;inset:0;background:var(--bg);padding:20px 18px 0;z-index:0}
+.anp-bg-h{font-family:var(--serif);font-weight:600;font-size:18px;color:var(--text)}
+.anp-bg-stats{display:flex;gap:18px;margin-top:12px}
+.anp-bg-stats > div{display:flex;flex-direction:column;gap:2px}
+.statrow{display:flex;align-items:center;gap:6px}
+.statrow .d{width:9px;height:9px;border-radius:50%}
+.statrow b{font-family:var(--serif);font-size:18px;color:var(--text);line-height:1}
+.anp-bg-stats i{font-style:normal;font-size:9.5px;color:var(--text-muted)}
+.anp-trig{background:var(--surface);border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.05);padding:11px 13px;margin-top:14px}
+.anp-trig-top{display:flex;justify-content:space-between;align-items:center}
+.anp-trig small{font-size:8.5px;letter-spacing:.12em;color:var(--text-placeholder);font-weight:600}
+.anp-pencil{color:var(--text-muted)}
+.anp-pencil svg{width:13px;height:13px}
+.anp-trig-pills{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:8px}
+.anp-trig-pills span{font-size:13px;font-weight:500;color:var(--text);border-bottom:2.5px solid var(--u);padding-bottom:2px}
+.anp-flist{margin-top:12px}
+.anp-frow{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--border)}
+.anp-frow:first-child{border-top:none}
+.anp-frow .dot2{width:9px;height:9px;border-radius:50%;flex:none}
+.anp-frow img{width:32px;height:32px;border-radius:8px;object-fit:cover;flex:none;background:#fff}
+.nm2wrap{flex:1;display:flex;flex-direction:column;min-width:0}
+.nm2{font-size:13.5px;color:var(--text)}
+.apple-note{display:flex;align-items:flex-start;gap:5px;font-size:10.5px;line-height:1.35;font-style:italic;color:var(--text-muted);max-height:0;opacity:0;overflow:hidden;transition:max-height .42s ease,opacity .42s ease,margin .42s ease}
+.apple-note svg{width:10px;height:10px;flex:none;margin-top:1px}
+.anp-frow .bdgs{display:flex;gap:4px;flex:none}
+.anp-frow .bdg2{width:16px;height:16px;border-radius:50%;color:#fff;font-size:9px;font-weight:700;display:grid;place-items:center}
+/* scrim dims the list while the sheet is up; clears when the sheet slides down */
+.anp-scrim{position:absolute;inset:0;background:rgba(45,35,28,.34);z-index:1;transition:opacity .55s ease}
+.anp-sheet{position:absolute;left:0;right:0;bottom:0;top:92px;background:#fff;border-radius:22px 22px 0 0;box-shadow:0 -12px 34px rgba(0,0,0,.18);padding:0 18px 16px;display:flex;flex-direction:column;z-index:2;transition:transform .55s cubic-bezier(.4,0,.2,1)}
+.anp-handle{width:36px;height:5px;border-radius:3px;background:#DAD4CC;margin:9px auto 0;flex:none}
+.anp-x{position:absolute;top:15px;right:15px;width:28px;height:28px;border-radius:50%;background:var(--surface-2);display:grid;place-items:center;color:var(--text-muted)}
+.anp-x svg{width:12px;height:12px}
+.anp-img{width:84px;height:84px;margin:12px auto 0;flex:none}
+.anp-img img{width:100%;height:100%;object-fit:contain}
+.anp-name{display:flex;justify-content:center;align-items:center;gap:8px;font-family:var(--serif);font-weight:600;font-size:19px;color:var(--text);margin-top:8px}
+.anp-sub{font-size:11.5px;line-height:1.45;color:var(--text-muted);text-align:center;margin:8px 6px 0}
+.anp-field{flex:1;min-height:84px;background:var(--surface-2);border-radius:14px;margin-top:14px;padding:14px 16px;font-size:13px;line-height:1.5;color:var(--text)}
+.anp-ph{color:var(--text-placeholder)}
+.anp-caret{display:none;width:1.5px;height:14px;background:var(--brand);vertical-align:-2px;margin-left:1px}
+.anp-caret.on{display:inline-block;animation:ncblink 1s step-end infinite}
+.anp-save{margin-top:12px;text-align:center;font-weight:600;font-size:14px;border-radius:13px;padding:13px;background:var(--surface-2);color:var(--text-placeholder);transition:background .25s,color .25s,transform .14s,filter .14s;flex:none}
+.anp-save.active{background:var(--text);color:var(--bg)}
+.anp-save.press{transform:scale(.95);filter:brightness(.8)}
+/* saved → sheet slides down, scrim clears, the apple's note appears on the list */
+.feat3-screen--popup.saved .anp-sheet{transform:translateY(103%)}
+.feat3-screen--popup.saved .anp-scrim{opacity:0;pointer-events:none}
+.feat3-screen--popup.saved .apple-note{max-height:34px;opacity:1;margin-top:3px}
+/* Override popup — option cards + "Save this", and the saved-halo on the list dot */
+.feat3-ovrpop .anp-img{width:54px;height:46px;margin:6px auto 0}
+.feat3-ovrpop .anp-sheet{top:100px}
+.feat3-ovrpop .anp-sub{margin:6px 8px 14px}
+.ovr-opts{margin-top:0;display:flex;flex-direction:column;gap:9px}
+.ovr-opt2{display:flex;align-items:center;gap:12px;background:rgba(245,242,237,.5);border-radius:13px;padding:12px 14px;transition:background .3s}
+.ovr-opt2.sel{background:#F5F2ED}
+.ovr-dot2{width:17px;height:17px;border-radius:50%;flex:none;opacity:.35;transition:opacity .3s}
+.ovr-opt2.sel .ovr-dot2{opacity:1}
+.ovr-opt2 .ovr-txt{display:flex;flex-direction:column;line-height:1.3;text-align:left}
+.ovr-opt2 .ovr-txt b{font-size:13.5px;color:var(--text-muted);font-weight:600;transition:color .3s}
+.ovr-opt2.sel .ovr-txt b{color:var(--text)}
+.ovr-opt2 .ovr-txt span{font-size:11.5px;color:var(--text-muted);opacity:.7}
+.ovr-opt2.sel .ovr-txt span{opacity:1}
+.ovr-save{margin-top:18px;margin-bottom:4px;text-align:center;font-weight:600;font-size:14px;color:#fff;border-radius:12px;padding:14px;background:rgba(122,107,94,.32);transition:background .3s,transform .14s,filter .14s}
+.ovr-save.active{background:var(--text)}
+.ovr-save.press{transform:scale(.96);filter:brightness(.85)}
+#rlDot{background:var(--yellow);transition:background .45s ease,box-shadow .45s ease}
+.feat3-ovrpop.ovr-applied #rlDot{background:var(--green);box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px var(--green)}
+.feat3-ovrpop .anp-sheet{transform:translateY(103%)}
+.feat3-ovrpop.ovr-up .anp-sheet{transform:none}
+.feat3-ovrpop .anp-scrim{opacity:0;pointer-events:none}
+.feat3-ovrpop.ovr-up .anp-scrim{opacity:1}
+.ncompose{display:flex;align-items:flex-end;gap:9px;background:var(--surface-2);border-radius:12px;padding:11px 12px;margin-bottom:4px}
+.nc-input{flex:1;min-height:36px;font-size:12.5px;line-height:1.42;color:var(--text)}
+.nc-caret{display:inline-block;width:1.5px;height:13px;background:var(--brand);vertical-align:-2px;margin-left:1px;animation:ncblink 1s step-end infinite}
+@keyframes ncblink{50%{opacity:0}}
+.nc-save{flex:none;display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--bg);background:var(--text);border-radius:8px;padding:6px 11px;transition:transform .15s}
+.nc-save svg{width:11px;height:11px}
+.nc-save.press{transform:scale(.88)}
+.nlist .note-row{padding:11px 2px 0}
+.nlist .note-txt{font-size:13px;line-height:1.45;color:var(--text)}
+.nlist .note-date{font-size:11px;color:var(--text-muted);margin-top:4px}
+.nl-in{animation:nlin .42s cubic-bezier(.2,.7,.3,1)}
+@keyframes nlin{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.nc-caret{animation:none}}
+.note-add svg{width:12px;height:12px}
+/* phone screen 2 — Food Tolerance Settings sheet (warm beige) with the buy-organic toggle */
+.feat3-screen--beige{background:#DC9F53;padding:16px 16px 0;color:#FFFDF8}
+.set-x{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.18);color:#FFFDF8;display:flex;align-items:center;justify-content:center}
+.set-x svg{width:13px;height:13px}
+.set-title{font-family:var(--serif);font-weight:600;font-size:21px;color:#FFFDF8;text-align:center;margin:22px 24px 18px}
+.envcard{background:var(--surface);border-radius:20px;box-shadow:0 6px 18px rgba(0,0,0,.10);padding:18px 16px}
+.env-h{font-family:var(--serif);font-weight:600;font-size:17px;color:var(--text);text-align:center;margin-bottom:8px}
+.env-desc{font-size:11.5px;line-height:1.5;color:var(--text-muted);text-align:center;margin:0 0 14px}
+.env-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.leaf32{flex:none;width:32px;height:32px;border-radius:50%;background:#EEF3E0;display:flex;align-items:center;justify-content:center}
+.leaf32 svg{width:17px;height:17px}
+.env-label{flex:1;font-size:13.5px;font-weight:600;color:var(--text)}
+.env-toggle{flex:none;width:42px;height:25px;border-radius:999px;background:var(--border);position:relative;transition:background .2s}
+.env-toggle.on{background:var(--green)}
+.env-toggle .knob{position:absolute;top:2.5px;left:2.5px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:left .2s}
+.env-toggle.on .knob{left:19.5px}
+.env-link{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11.5px;color:var(--text-muted);text-align:center}
+.env-link svg{width:13px;height:13px;flex:none}
+/* phone screen — FoodDetailSheet header (coloured arc + white card with rounded-square image) */
+.fdsheet{position:relative;margin:-12px -18px 7px}
+.fds-arc{position:absolute;top:0;left:0;right:0;height:88px;border-radius:0 0 50% 50%/0 0 32px 32px}
+.fds-card{position:relative;background:var(--surface);border-radius:20px;box-shadow:0 4px 16px rgba(0,0,0,.08);margin:9px 18px 0;padding:9px 16px;text-align:center}
+.fds-img{width:58px;height:44px;margin:0 auto 4px;display:flex;align-items:center;justify-content:center}
+.fds-img.sm{width:64px;height:54px}
+.fds-img img{max-width:100%;max-height:100%;object-fit:contain}
+.fds-name{display:flex;align-items:center;justify-content:center;gap:7px;font-family:var(--serif);font-weight:600;font-size:16px;color:var(--text)}
+.fds-dot{width:11px;height:11px;border-radius:50%;flex:none}
+.fds-cat{font-size:12px;color:var(--text-muted);margin-top:2px}
+.fds-desc{font-size:10.5px;line-height:1.35;color:var(--text-muted);text-align:center;margin:5px 4px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+/* phone screen — Food Detail card (chemical levels + comfort) */
+.fdc{background:var(--surface);border-radius:18px;box-shadow:0 2px 10px rgba(0,0,0,.05);padding:11px 14px 12px}
+.fdc-h{font-family:var(--serif);font-weight:600;font-size:15px;color:var(--text);text-align:center;margin-bottom:6px}
+.fdc-desc{font-size:10.5px;line-height:1.38;color:var(--text);background:var(--surface-2);border-radius:10px;padding:7px 11px;margin-bottom:14px;text-align:center}
+.fdc-colhead{display:flex;justify-content:space-between;font-size:9.5px;color:var(--text-placeholder);padding:0 2px 4px 28px}
+.fdc-row{display:flex;align-items:center;gap:8px;padding:5px 2px}
+.fdc-row .bdg{width:20px;height:20px;border-radius:50%;color:#fff;font-size:10px;font-weight:700;display:grid;place-items:center;flex:none}
+.fdc-name{font-size:13px;color:var(--text)}
+.fdc-lvl{font-size:11.5px;color:var(--text-muted)}
+.fdc-comf{margin-left:auto;font-size:12.5px;color:var(--text);position:relative;padding-bottom:3px}
+.fdc-comf::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.5px;border-radius:2px;background:var(--uc,var(--text))}
+.fdc-btns{display:flex;gap:8px;margin-top:14px}
+.fdc-btn{font-size:11.5px;color:var(--bg);background:var(--text);border-radius:10px;padding:8px 12px}
+/* phone screen — Override sheet (food header + option cards) */
+.ovr-head{text-align:center;margin-bottom:14px}
+.ovr-head .fds-img{margin-bottom:8px}
+.ovr-sub{font-size:11.5px;color:var(--text-muted);text-align:center;margin:8px 8px 16px;line-height:1.45}
+.ovr-opt{display:flex;align-items:center;gap:13px;background:var(--surface-2);border-radius:14px;padding:14px 15px;margin-bottom:10px}
+.ovr-opt.is-sel{background:var(--surface);box-shadow:0 2px 9px rgba(0,0,0,.06)}
+.ovr-opt:not(.is-sel) .ovr-dot{opacity:.32}
+.ovr-opt:not(.is-sel) b{color:var(--text-muted)}
+.ovr-opt:not(.is-sel) .ovr-txt span{opacity:.6}
+.ovr-dot{width:18px;height:18px;border-radius:50%;flex:none}
+.ovr-txt{display:flex;flex-direction:column;line-height:1.3;text-align:left}
+.ovr-txt b{font-size:14px;color:var(--text);font-weight:600}
+.ovr-txt span{font-size:12px;color:var(--text-muted)}
+/* right-hand copy (inside the card, right of the phone), crossfading per step */
+.feat3-copy{position:absolute;top:0;bottom:0;right:clamp(32px,4vw,64px);width:43%;z-index:1}
+.feat3-copy .f3{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;opacity:0;transform:translateY(18px);transition:opacity .32s ease,transform .32s ease;pointer-events:none}
+.feat3-copy .f3.active{opacity:1;transform:none;pointer-events:auto}
+.feat3-copy .kicker{color:#E7F0CF;margin-bottom:16px}
+.feat3-copy .kicker::before{background:#E7F0CF}
+.feat3-copy h2{font-size:clamp(30px,4vw,44px);color:#FFF8EC;margin-bottom:18px;max-width:13ch}
+.feat3-copy h2 em{font-style:italic;color:#FFF8EC}
+.feat3-copy p{color:rgba(255,248,236,.9);font-size:clamp(18px,1.75vw,21px);max-width:460px;line-height:1.6}
+.feat3-prog{position:absolute;left:3px;bottom:34px;display:flex;gap:8px;align-items:center;z-index:2}
+.feat3-prog b{width:7px;height:7px;border-radius:999px;background:rgba(255,248,236,.35);transition:width .3s,background .3s}
+.feat3-prog b.on{width:22px;background:#FFF8EC}
+@media(max-width:880px){
+  .feat3-scroll{height:390vh}
+  .feat3-pin{height:auto;min-height:100svh;padding-top:56px}
+  .feat3-stage{display:flex;flex-direction:column}
+  .feat3-pin .feat3-head2{display:block;margin-bottom:18px}
+  .feat3-pin .feat3-sub{margin-top:4px;font-size:15px}
+  .feat3-head2--out{display:none}
+  .feat3-sub{margin-top:6px;font-size:16px}
+  .feat3-card{height:auto;padding:1px 0 6px;margin-top:46px}
+  .feat3-phone{position:static;transform:none;display:flex;justify-content:center;align-items:flex-start;margin-top:-46px;margin-bottom:0;height:462px;overflow:visible}
+  .feat3 .phone{width:300px;transform:scale(.72);transform-origin:top center}
+  .feat3 .screen{height:596px}
+  .feat3-copy{position:relative;top:auto;bottom:auto;right:auto;width:auto;min-height:158px;padding:0 20px 6px;text-align:center}
+  .feat3-copy .f3{align-items:center;justify-content:flex-start;padding-top:18px}
+  .feat3-copy h2{max-width:none;font-size:22px;margin-bottom:8px}
+  .feat3-copy p{margin:0 auto;font-size:15.5px;line-height:1.5;max-width:310px}
+  .feat3-prog{position:static;justify-content:center;margin-top:10px;padding-bottom:4px}
+  .feat3-copy .kicker{justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){
+  .feat3-scroll{height:auto}
+  .feat3-pin{position:static;height:auto;display:block;padding:60px 0}
+  .feat3-card{height:auto;padding-bottom:40px}
+  .feat3-phone{position:static;transform:none;display:flex;justify-content:center;padding-top:24px}
+  .feat3-copy{position:relative;top:auto;bottom:auto;right:auto;width:auto;min-height:0;padding:0 24px}
+  .feat3-copy .f3{position:relative;opacity:1;transform:none}
+  .feat3-copy .f3:not(.active){display:none}
+}
+
+/* ----- merged "7 chemicals + science" — RED dot-field card with flip cards (Welcome slide 1 palette) ----- */
+.merge3{padding:44px 0 44px}
+.merge3-card{position:relative;background:#C9502F;border-radius:var(--r-xxl);overflow:hidden;padding:clamp(48px,5.5vw,66px) clamp(28px,5vw,56px);text-align:left}
+.merge3-dots{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.merge3-body{position:relative;z-index:1;max-width:940px}
+/* intro line — normal (body) font, top-left, like the How-it-works heading */
+.merge3-h{font-family:var(--serif);font-weight:600;font-size:clamp(30px,4vw,44px);line-height:1.15;letter-spacing:-.01em;color:#FFF8EC;margin:0 0 14px;max-width:600px}
+.merge3-h em{font-style:italic;color:#FFDFA1}
+.merge3-intro{font-family:var(--sans);font-weight:400;font-size:clamp(16px,1.7vw,19px);line-height:1.5;color:#FCE7DE;max-width:560px;margin:0 0 18px}
+.merge3-chems{font-family:var(--sans);font-weight:700;font-size:clamp(11.5px,1.15vw,13.5px);letter-spacing:.14em;text-transform:uppercase;color:#FFDFA1;margin:0 0 34px}
+.merge3-intro em{font-style:normal;font-weight:600;color:#FFF8EC}
+/* flip cards — square, left-aligned grid, rotate like a playing card on hover/tap */
+.flipgrid{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:18px}
+.flipcard{flex:0 0 calc((100% - 54px)/4);aspect-ratio:1;perspective:1100px;background:none;border:none;padding:0;cursor:pointer}
+.flip-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.4,0,.2,1)}
+.flipcard.flipped .flip-inner{transform:rotateY(180deg)}
+@media(hover:hover){.flipcard:hover .flip-inner,.flipcard:focus-visible .flip-inner{transform:rotateY(180deg)}}
+.flip-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;display:flex;flex-direction:column;overflow:hidden}
+.flip-front{background:#FFF8EC;align-items:flex-start;justify-content:flex-start;padding:20px;box-shadow:0 6px 18px rgba(120,40,18,.18)}
+.flip-front .fc-name{font-family:var(--serif);font-weight:600;font-size:clamp(18px,1.9vw,24px);color:#54453A;letter-spacing:-.3px;text-align:left;line-height:1.12}
+.flip-front .fc-hook{font-family:var(--serif);font-weight:600;font-size:clamp(16px,1.75vw,21px);line-height:1.3;letter-spacing:-.2px;text-align:left;color:#7A6B5E}
+.flip-front .fc-badge{position:absolute;top:14px;right:14px;font-family:var(--sans);font-weight:700;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:rgba(255,248,236,.18);color:#FFF1E8}
+.flip-front .fc-hint{position:absolute;bottom:16px;right:16px;width:26px;height:26px;border-radius:50%;background:#F4D9CB;color:#B0492C;display:flex;align-items:center;justify-content:center}
+.flip-front .fc-hint svg{width:12px;height:12px}
+.flip-back{background:#5C3A28;color:#F4E4DA;transform:rotateY(180deg);align-items:flex-start;justify-content:center;padding:clamp(16px,1.7vw,20px)}
+.flip-back .fb-name{font-family:var(--serif);font-weight:600;font-size:clamp(15px,1.5vw,19px);margin:0 0 7px}
+.flip-back p{font-size:clamp(11px,1.05vw,13px);line-height:1.46;text-align:left;margin:0}
+/* PLAIN (no-dots) red variant: face-up cards sit almost in the field colour (subtle), inner side is cream */
+.merge3--plain .flip-front{background:#CB5A38;box-shadow:inset 0 0 0 1px rgba(255,248,236,.16),0 4px 14px rgba(120,40,18,.16)}
+.merge3--plain .flip-front .fc-name{color:#FFF1E8}
+.merge3--plain .flip-front .fc-hint{background:rgba(255,248,236,.20);color:#FFF1E8}
+.merge3--plain .flip-front .fc-hook{color:rgba(255,241,232,.85)}
+.merge3--plain .flip-back{background:#FFF8EC;color:#5C3A28}
+.merge3--plain .flip-back p{color:#6A4632}
+@media(max-width:680px){
+  /* Atoms pattern: one big card, the next peeks from the right; swipe, tap to flip */
+  .merge3-card{padding:44px 20px}
+  .flipgrid{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin:0;padding:0 0 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .flipgrid::-webkit-scrollbar{display:none}
+  .flipgrid::after{content:"";flex:0 0 26px}
+  .flipcard{flex:0 0 78%;aspect-ratio:auto;height:298px;scroll-snap-align:start}
+  .flip-front{padding:24px;justify-content:center}
+  .flip-front .fc-hook{font-size:22px;line-height:1.3;max-width:95%}
+  .flip-front .fc-hint{width:28px;height:28px;bottom:16px;right:16px}
+  .flip-front .fc-badge{top:auto;bottom:18px;left:18px;right:auto}
+  .flip-back{padding:22px 24px;justify-content:center}
+  .flip-back .fb-name{font-size:18px;margin-bottom:10px}
+  .flip-back p{font-size:15px;line-height:1.55}
+}
+
+/* ----- faq ----- */
+.faq{padding:64px 0 110px}
+@media(max-width:680px){
+  .faq{padding:40px 0 64px}
+  summary{font-size:17.5px;padding:16px 18px}
+  .faq-a{font-size:16px;padding:0 18px 18px}
+  .faq-head{margin-bottom:26px}
+  details{margin-bottom:10px}
+}
+.faq-head{max-width:520px;margin-bottom:56px}
+.faq-head h2{margin-top:18px}
+.faq-list{max-width:800px}
+details{
+  background:var(--surface);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-raised);margin-bottom:16px;overflow:hidden;
+}
+summary{
+  list-style:none;cursor:pointer;padding:27px 30px;
+  font-family:var(--serif);font-weight:600;font-size:20px;
+  display:flex;justify-content:space-between;align-items:center;gap:18px;
+}
+summary::-webkit-details-marker{display:none}
+summary .pl{
+  width:32px;height:32px;border-radius:50%;background:var(--surface-2);flex-shrink:0;
+  display:grid;place-items:center;transition:transform .3s,background .3s;
+}
+summary .pl svg{width:13px;height:13px;stroke:var(--text);stroke-width:2.4;transition:transform .3s}
+details[open] summary .pl{background:var(--brand);width:16px;height:16px}
+details[open] summary .pl svg{display:none}
+.faq-a{padding:2px 30px 28px;color:var(--text-muted);font-size:16.5px;line-height:1.6;max-width:660px}
+
+/* ----- section divider ----- */
+.section-divider{border:none;height:1px;background:var(--border);max-width:1120px;margin:0 auto}
+
+/* ----- final cta ----- */
+.final{padding:60px 0 130px;text-align:left;position:relative;overflow:hidden}
+@media(max-width:680px){.final{padding:36px 0 72px}.final .appstore{margin-top:24px}.final h2 br{display:none}}
+.final h2{
+  font-size:clamp(30px,4vw,44px);line-height:1.12;margin-bottom:14px;
+}
+.final h2 .line2{font-style:italic;color:var(--brand)}
+.final .appstore{margin-top:38px}
+.final .wrap{position:relative;z-index:1}
+
+/* ----- footer ----- */
+footer{background:var(--text);color:#D9CFC6;padding:64px 0 40px;font-size:14.5px}
+.foot-top{display:flex;justify-content:space-between;align-items:flex-start;gap:32px;flex-wrap:wrap;margin-bottom:44px}
+.foot-logo{display:flex;align-items:center;gap:10px}
+.foot-logo .logo-mark{background:var(--brand)}
+.foot-logo .logo-word{color:#FFFDF8}
+.foot-links{display:flex;gap:26px;flex-wrap:wrap}
+.foot-links a{text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:#FFFDF8}
+.foot-contact{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.foot-contact a{color:#F5D4A3;text-decoration:none}
+.foot-ig{display:inline-flex;align-items:center;gap:8px;color:#D9CFC6!important;transition:color .2s}
+.foot-ig:hover{color:#FFFDF8!important}
+.foot-disclaimer{
+  border-top:1px solid rgba(217,207,198,.18);padding-top:30px;max-width:860px;
+}
+.foot-disclaimer .fd-label{
+  display:block;font-size:12.5px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;
+  color:#9A8E82;margin-bottom:16px;
+}
+.foot-disclaimer p{font-size:15px;line-height:1.7;color:#CBBFB4;margin:0 0 12px}
+.foot-disclaimer p:last-child{margin-bottom:0}
+.copyright{margin-top:26px;font-size:12.5px;color:#8C7F73}
+
+/* ===================== Rio · How it works (user-provided section) ===================== */
+.rio-hiw{ --cream:#FFFDF8; --surface:#FFFFFF; --brown:#54453A; --brownMute:#7A6B5E; --placeholder:#A89B8E;
+  --brand:#D4882A; --border:#E8E2DA; --red:#D45838; --yellow:#E0B93A; --green:#8DAD45; }
+.rio-hiw, .rio-hiw * { font-family:"Source Sans 3", sans-serif; }
+.rio-hiw { background:var(--cream); color:var(--brown); }
+.rio-hiw__inner { position:relative; width:100%; max-width:1100px; margin:0 auto; padding:72px 48px; overflow:hidden; }
+.rio-hiw__kicker { display:flex; align-items:center; gap:13px; font-size:12.5px; font-weight:700;
+  letter-spacing:2.6px; text-transform:uppercase; color:var(--brownMute); }
+.rio-hiw__kicker .bar { width:28px; height:2px; background:var(--brand); border-radius:2px; }
+.rio-hiw__title { font-family:"Source Sans 3", sans-serif; font-weight:400; letter-spacing:0; line-height:1.55; color:var(--brownMute);
+  font-size:18px; margin:14px 0 0; max-width:560px; }
+/* the strip slides; only the ring stays put (and recolours) */
+.rio-hiw__stage { position:relative; display:flex; align-items:center; margin-top:56px; min-height:230px; }
+.rio-hiw__viewport { position:relative; z-index:2; overflow:hidden; width:100%; touch-action:pan-x; overscroll-behavior-x:contain; }
+.rio-hiw__strip { display:flex; will-change:transform; transition:transform .6s cubic-bezier(.4,0,.2,1); }
+.rio-hiw__panel { flex:0 0 auto; display:flex; align-items:center; gap:16px; }
+/* number sits in a 200×200 box (matches the ring) and is dead-centred; Bitter italic light, sized to nest in the ring */
+.rio-hiw__num { flex:none; width:150px; height:200px; display:flex; align-items:center; justify-content:center; line-height:1;
+  font-family:"Bitter", serif; font-weight:600; color:var(--brown); font-size:112px; }
+.rio-hiw__num i { font-style:normal; color:var(--c,#D45838); }
+.rio-hiw__copy { flex:1; min-width:0; max-width:380px; align-self:flex-start; }   /* top-align so every step's title starts at the same height (number stays centred with the ring) */
+.rio-hiw__h { font-family:"Bitter", serif; font-weight:600; letter-spacing:-0.4px; line-height:1.1; color:var(--brown); font-size:clamp(30px,4vw,44px); margin:0; max-width:none; }
+.rio-hiw__s { font-weight:400; line-height:1.55; color:var(--brownMute); font-size:18px; margin:16px 0 0; max-width:none; }
+.rio-hiw__foot { display:flex; align-items:center; justify-content:space-between; margin-top:52px; }
+.rio-hiw__dots { display:flex; gap:8px; align-items:center; }
+.rio-hiw__dots b { height:6px; width:6px; border-radius:999px; display:block; cursor:pointer; background:var(--placeholder);
+  opacity:.5; transition:all .4s cubic-bezier(.4,0,.2,1); }
+.rio-hiw__arrows { display:flex; align-items:center; gap:12px; }
+.rio-hiw__arrow { width:54px; height:54px; border-radius:999px; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; font-size:21px; border:none; transition:transform .15s; user-select:none; }
+.rio-hiw__arrow:active { transform:scale(0.94); }
+.rio-hiw__arrow svg { width:19px; height:19px; }
+.rio-hiw__arrow.is-primary { background:var(--brown); color:var(--cream); }
+.rio-hiw__arrow.is-ghost { background:var(--surface); color:var(--brown); border:1px solid var(--border); box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+@media (max-width:680px){
+  .rio-hiw__inner { padding:56px 22px 52px; min-height:calc(100svh - 68px); display:flex; flex-direction:column; justify-content:center; }
+  .rio-hiw__title { font-size:17px; margin-top:12px; }
+  .rio-hiw__stage { margin-top:0; min-height:0; flex:1; }
+  .rio-hiw__panel { gap:16px; }
+  .rio-hiw__num { width:92px; font-size:82px; height:150px; }
+  .rio-hiw__h { font-size:30px; }
+  .rio-hiw__h br { display:none; }
+  .rio-hiw__s { font-size:16px; margin-top:12px; }
+  .rio-hiw__track { margin-top:34px; }
+  .rio-hiw__foot { margin-top:8px; }
+  .rio-hiw__arrow { width:50px; height:50px; font-size:19px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<nav>
+  <div class="wrap nav-inner">
+    <a class="logo" href="#top" aria-label="Rio home">
+      <img class="logo-mark-img" src="assets/app/rio-logo.png" alt="Rio">
+    </a>
+    <div class="nav-links">
+      <a class="nav-cta" href="#download">Get the app</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero" id="top">
+  <div class="hero-band">
+    <div class="hero-bandclip" aria-hidden="true">
+      <div class="honey-glow"></div>
+      <div class="honey-vignette"></div>
+    </div>
+    <div class="wrap hero-stage">
+    <div class="hero-inner">
+      <span class="kicker hero-kicker rv rv-d1">A food intolerance app</span>
+      <h1 class="hero-h1 rv rv-d1">One food list, matched to <em>everything you react&nbsp;to</em>.</h1>
+      <p class="lede hero-lede rv rv-d2">Understand your intolerances and find the foods that work for your body.</p>
+      <div class="rv rv-d3 hero-cta-wrap">
+        <a class="appstore" href="#" id="download">
+          <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+          <span class="as-text">
+            <span class="as-small">Download on the</span>
+            <span class="as-big">App Store</span>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-phone">
+      <div class="phone">
+        <div class="screen">
+          <div class="statusbar"><span>9:41</span><svg width="34" height="11" viewBox="0 0 34 11" fill="var(--text)"><rect x="0" y="6" width="2.5" height="4" rx="1"/><rect x="4" y="4" width="2.5" height="6" rx="1"/><rect x="8" y="2" width="2.5" height="8" rx="1"/><rect x="15" y="1" width="16" height="9" rx="2.5" fill="none" stroke="var(--text)" stroke-width="1"/><rect x="17" y="3" width="10" height="5" rx="1"/><rect x="32" y="4" width="1.5" height="3" rx=".75"/></svg></div>
+          <div class="screen-pad">
+            <div class="screen-title">Your personal food list</div>
+            <div class="stats">
+              <div class="stat"><span class="stat-num"><span class="dot" style="background:var(--green)"></span><b>438</b></span><span class="stat-lbl">work well</span></div>
+              <div class="stat"><span class="stat-num"><span class="dot" style="background:var(--yellow)"></span><b>41</b></span><span class="stat-lbl">pay attention</span></div>
+              <div class="stat"><span class="stat-num"><span class="dot" style="background:var(--red)"></span><b>27</b></span><span class="stat-lbl">avoid for now</span></div>
+            </div>
+            <div class="triggers">
+              <small>3 ACTIVE TRIGGERS</small>
+              <div class="pills">
+                <span class="pill" style="--bar:#E8A84C">Histamine</span>
+                <span class="pill" style="--bar:#EBD573">FODMAPs</span>
+                <span class="pill" style="--bar:#D95E34">Lactose</span>
+              </div>
+            </div>
+            <div class="search-mock"><svg viewBox="0 0 16 16" fill="none" stroke-width="1.6"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5" stroke-linecap="round"/></svg>Type a food: broccoli, egg, almonds...</div>
+          </div>
+          <div class="foodlist">
+            <div class="foodlist-track" id="foodlistTrack">
+              <div class="frow"><span class="tol" style="background:var(--green)"></span><img class="pic" src="assets/food/blueberry.png" alt=""><span class="nm">Blueberries</span><span class="badges"><svg class="leafb" viewBox="0 0 16 16"><path d="M13.5 2.5C8 2.5 4 5.5 3.5 10c-.1 1.2.1 2.4.6 3.5.1-2.3 1.2-5.6 5.4-8-3 2.7-4.6 5.9-4.4 8.6.9.3 1.9.4 2.9.3 4.5-.5 6-5.5 5.5-11.9z" fill="#fff"/></svg></span><span class="plus"><svg viewBox="0 0 14 14" fill="none"><path d="M7 2.5v9M2.5 7h9" stroke-linecap="round"/></svg></span></div>
+              <div class="frow"><span class="tol" style="background:var(--red)"></span><img class="pic" src="assets/food/avocado.png" alt=""><span class="nm">Avocado</span><span class="badges"><span class="bdg" style="background:var(--red)">H</span><span class="bdg" style="background:var(--yellow)">F</span></span><span class="plus"><svg viewBox="0 0 14 14" fill="none"><path d="M7 2.5v9M2.5 7h9" stroke-linecap="round"/></svg></span></div>
+              <div class="frow"><span class="tol" style="background:var(--yellow)"></span><img class="pic" src="assets/food/zucchini.png" alt=""><span class="nm">Zucchini</span><span class="badges"><span class="bdg" style="background:var(--yellow)">F</span></span><span class="plus"><svg viewBox="0 0 14 14" fill="none"><path d="M7 2.5v9M2.5 7h9" stroke-linecap="round"/></svg></span></div>
+              <div class="frow"><span class="tol" style="background:var(--green)"></span><img class="pic" src="assets/food/salmon.png" alt=""><span class="nm">Salmon</span><span class="badges"></span><span class="plus"><svg viewBox="0 0 14 14" fill="none"><path d="M7 2.5v9M2.5 7h9" stroke-linecap="round"/></svg></span></div>
+              <div class="frow"><span class="tol" style="background:var(--red)"></span><img class="pic" src="assets/food/parmesan.png" alt=""><span class="nm">Parmesan</span><span class="badges"><span class="bdg" style="background:var(--red)">H</span><span class="bdg" style="background:var(--red)">L</span></span><span class="plus"><svg viewBox="0 0 14 14" fill="none"><path d="M7 2.5v9M2.5 7h9" stroke-linecap="round"/></svg></span></div>
+              <div class="frow"><span class="tol" style="background:var(--red)"></span><img class="pic" src="assets/food/strawberries.png" alt=""><span class="nm">Strawberries</span><span class="badges"><svg class="leafb" viewBox="0 0 16 16"><path d="M13.5 2.5C8 2.5 4 5.5 3.5 10c-.1 1.2.1 2.4.6 3.5.1-2.3 1.2-5.6 5.4-8-3 2.7-4.6 5.9-4.4 8.6.9.3 1.9.4 2.9.3 4.5-.5 6-5.5 5.5-11.9z" fill="#fff"/></svg><span class="bdg" style="background:var(--red)">H</span><span class="bdg" style="background:var(--yellow)">F</span></span><span class="plus"><svg viewBox="0 0 14 14" fill="none"><path d="M7 2.5v9M2.5 7h9" stroke-linecap="round"/></svg></span></div>
+              <div class="frow"><span class="tol" style="background:var(--red)"></span><img class="pic" src="assets/food/banana.png" alt=""><span class="nm">Banana</span><span class="badges"><span class="bdg" style="background:var(--red)">H</span><span class="bdg" style="background:var(--red)">F</span></span><span class="plus"><svg viewBox="0 0 14 14" fill="none"><path d="M7 2.5v9M2.5 7h9" stroke-linecap="round"/></svg></span></div>
+            </div>
+          </div>
+          <div class="screen-fade"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</header>
+
+<!-- ===================== HOW IT WORKS (Rio section, user-provided) ===================== -->
+<section class="rio-hiw" data-rio-hiw>
+  <div class="rio-hiw__inner">
+    <div class="rio-hiw__kicker"><span class="bar"></span>How it works</div>
+    <p class="rio-hiw__title">From how you feel to what to eat in three easy steps.</p>
+
+    <div class="rio-hiw__stage">
+      <div class="rio-hiw__viewport">
+        <div class="rio-hiw__strip" data-strip>
+          <div class="rio-hiw__panel" style="--c:#D45838">
+            <span class="rio-hiw__num">1<i>.</i></span>
+            <div class="rio-hiw__copy">
+              <h3 class="rio-hiw__h">Uncover your <br>food triggers</h3>
+              <p class="rio-hiw__s">A few simple questions about how food makes you feel point to your most likely triggers, and to where they overlap.</p>
+            </div>
+          </div>
+          <div class="rio-hiw__panel" style="--c:#E8CB5B">
+            <span class="rio-hiw__num">2<i>.</i></span>
+            <div class="rio-hiw__copy">
+              <h3 class="rio-hiw__h">Get a personal <br>food list</h3>
+              <p class="rio-hiw__s">Over 500 whole foods, showing what likely works for your body and what doesn't. And it keeps changing as your body does.</p>
+            </div>
+          </div>
+          <div class="rio-hiw__panel" style="--c:#8DAD45">
+            <span class="rio-hiw__num">3<i>.</i></span>
+            <div class="rio-hiw__copy">
+              <h3 class="rio-hiw__h">See the nutrients <br>in the foods <br>you tolerate</h3>
+              <p class="rio-hiw__s">Iron, magnesium, calcium and 20+ more, each with the foods from your list that give you the most of it.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rio-hiw__foot">
+      <div class="rio-hiw__dots" data-dots></div>
+      <div class="rio-hiw__arrows">
+        <button class="rio-hiw__arrow is-ghost" data-prev aria-label="Previous"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 8h-10M7 4.5l-3.5 3.5 3.5 3.5"/></svg></button>
+        <button class="rio-hiw__arrow is-primary" data-next aria-label="Next"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8h10M9 4.5l3.5 3.5-3.5 3.5"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===================== TRACKED + TRUSTED — 8 chemical flip cards on red dot-field ===================== -->
+<section class="merge3 merge3--plain">
+  <div class="wrap rv">
+    <div class="merge3-card">
+      <canvas class="merge3-dots" id="mergeDots" aria-hidden="true"></canvas>
+      <div class="merge3-body">
+        <h2 class="merge3-h">Look at food the way <em>your body does</em>.</h2>
+        <p class="merge3-intro">Seven main triggers across more than 500 whole foods, with numbers that come from real research.</p>
+        <p class="merge3-chems">Histamine&ensp;&middot;&ensp;FODMAPs&ensp;&middot;&ensp;Lactose&ensp;&middot;&ensp;Gluten&ensp;&middot;&ensp;Salicylates&ensp;&middot;&ensp;Oxalates&ensp;&middot;&ensp;Sulfur</p>
+        <div class="flipgrid">
+          <button class="flipcard" type="button"><div class="flip-inner">
+            <div class="flip-face flip-front"><span class="fc-hook">Reactions to leftovers, wine, or aged cheese</span><span class="fc-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8h10M9 4.5l3.5 3.5-3.5 3.5"/></svg></span></div>
+            <div class="flip-face flip-back"><span class="fb-name">Histamine</span><p>Histamine builds up in aged and fermented foods. Your body normally breaks it down with an enzyme called DAO, but if that process is slow, histamine can accumulate and cause symptoms.</p></div>
+          </div></button>
+          <button class="flipcard" type="button"><div class="flip-inner">
+            <div class="flip-face flip-front"><span class="fc-hook">Bloating after onion, garlic, or apples</span><span class="fc-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8h10M9 4.5l3.5 3.5-3.5 3.5"/></svg></span></div>
+            <div class="flip-face flip-back"><span class="fb-name">FODMAPs</span><p>FODMAPs are types of carbohydrates that ferment in your gut. They pull water into your intestines and feed gut bacteria, which can cause bloating, gas, and digestive discomfort.</p></div>
+          </div></button>
+          <button class="flipcard" type="button"><div class="flip-inner">
+            <div class="flip-face flip-front"><span class="fc-hook">Gas or cramps after milk or yogurt</span><span class="fc-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8h10M9 4.5l3.5 3.5-3.5 3.5"/></svg></span></div>
+            <div class="flip-face flip-back"><span class="fb-name">Lactose</span><p>Lactose is the natural sugar in milk. Without enough lactase enzyme, it passes undigested into your colon where bacteria ferment it, causing gas, bloating, and discomfort.</p></div>
+          </div></button>
+          <button class="flipcard" type="button"><div class="flip-inner">
+            <div class="flip-face flip-front"><span class="fc-hook">Fog or fatigue after bread and pasta</span><span class="fc-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8h10M9 4.5l3.5 3.5-3.5 3.5"/></svg></span></div>
+            <div class="flip-face flip-back"><span class="fb-name">Gluten</span><p>Gluten is a protein found in wheat, barley, and rye. Some people experience digestive issues, brain fog, or fatigue after eating gluten.</p></div>
+          </div></button>
+          <button class="flipcard" type="button"><div class="flip-inner">
+            <div class="flip-face flip-front"><span class="fc-hook">Flare-ups after spices, mint, or aspirin</span><span class="fc-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8h10M9 4.5l3.5 3.5-3.5 3.5"/></svg></span></div>
+            <div class="flip-face flip-back"><span class="fb-name">Salicylates</span><p>Salicylates are natural chemicals plants produce as protection. They’re found in many fruits, vegetables, spices, and even medications like aspirin.</p></div>
+          </div></button>
+          <button class="flipcard" type="button"><div class="flip-inner">
+            <div class="flip-face flip-front"><span class="fc-hook">Kidney stones or achy joints</span><span class="fc-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8h10M9 4.5l3.5 3.5-3.5 3.5"/></svg></span></div>
+            <div class="flip-face flip-back"><span class="fb-name">Oxalates</span><p>Oxalates are compounds found in many plant foods. In high amounts, they can bind with calcium and cause kidney stones or contribute to joint and muscle pain.</p></div>
+          </div></button>
+          <button class="flipcard" type="button"><div class="flip-inner">
+            <div class="flip-face flip-front"><span class="fc-hook">Rotten-egg burps after eggs or broccoli</span><span class="fc-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8h10M9 4.5l3.5 3.5-3.5 3.5"/></svg></span></div>
+            <div class="flip-face flip-back"><span class="fb-name">Sulfur</span><p>Sulfur compounds are found in protein-rich foods and certain vegetables. Some people have difficulty processing sulfur, leading to digestive issues and fatigue.</p></div>
+          </div></button>
+          <button class="flipcard" type="button"><div class="flip-inner">
+            <div class="flip-face flip-front"><span class="fc-badge">Bonus</span><span class="fc-hook">Sensitivity to perfumes, smoke, or cleaning products</span><span class="fc-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8h10M9 4.5l3.5 3.5-3.5 3.5"/></svg></span></div>
+            <div class="flip-face flip-back"><span class="fb-name">Pesticides</span><p>Pesticides are chemicals used to protect fruits and vegetables while they grow. Some foods hold more of them than others, even after washing.</p></div>
+          </div></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SET YOUR TRIGGERS (levels + live foods) ===================== -->
+<style>
+.tv-sec{padding:50px 0 10px}
+.tvb2-head{max-width:1120px;margin:0 auto;padding:6px 24px 14px;position:sticky;top:68px;z-index:7;background:var(--bg)}
+.tvb2-head h2{margin:18px 0 20px}
+.tvb2-head .lede{max-width:520px}
+.tf-grid{max-width:1120px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.05fr .95fr;gap:72px;align-items:start}
+.tv-flow{display:flex;flex-direction:column}
+.tv-lv{min-height:36vh;display:flex;flex-direction:column;justify-content:center;opacity:.28;transition:opacity .5s ease}
+
+.tv-lv.active{opacity:1}
+.tv-lv h3{font-size:clamp(26px,3vw,36px);margin-bottom:16px}
+.tv-nm{position:relative;display:inline-block}
+.tv-nm::after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:6px;border-radius:6px;background:var(--ul);transform:scaleX(0);transform-origin:left;transition:transform .65s cubic-bezier(.2,.65,.2,1) .12s}
+.tv-lv.active .tv-nm::after{transform:scaleX(1)}
+.tv-lv p{color:var(--text-muted);max-width:460px;font-size:17px}
+/* foods straight on the page background — no card, no mockup */
+.tf-sticky{position:sticky;top:280px;padding-top:0;z-index:6;background:var(--bg)}
+.tv-prog{display:none}
+.tv-prog b{width:7px;height:7px;border-radius:999px;background:var(--chip,#D9D3CB);transition:width .3s,background .3s}
+.tv-prog b.on{width:22px;background:var(--text)}
+.tf-food{display:flex;align-items:center;gap:22px;padding:22px 0}
+.tf-dot{width:19px;height:19px;border-radius:50%;flex:none;transition:background .45s ease}
+.tf-dot.pop{animation:tfpop .5s ease}
+@keyframes tfpop{0%{transform:scale(1)}45%{transform:scale(1.45)}100%{transform:scale(1)}}
+.tf-food img{width:78px;height:78px;object-fit:contain;flex:none}
+.tf-tx{display:flex;flex-direction:column;gap:3px}
+.tf-name{font-family:var(--serif);font-weight:600;font-size:clamp(26px,3vw,36px);line-height:1.1;color:var(--text)}
+.tf-sub{font:400 15px var(--sans);color:var(--text-placeholder);margin-top:2px}
+@media(max-width:880px){
+  /* runway is CONTENT (sticky is constrained to the parent content box) */
+  .tv-sec::after{content:"";display:block;height:185vh}
+  .tvb2-head{padding-bottom:10px}
+  .tvb2-head .lede{font-size:16px}
+  .tf-grid{display:block;position:sticky;background:var(--bg);z-index:6;padding:0 24px 22px}
+  /* one centered level word at a time, crossfading; description under it */
+  .tv-flow{display:block;position:relative;height:130px}
+  .tv-lv{position:absolute;left:0;right:0;top:0;bottom:0;min-height:0;align-items:center;text-align:center;justify-content:flex-start;padding-top:2px;opacity:0}
+  .tv-lv.active{opacity:1}
+  .tv-lv h3{font-size:26px;margin-bottom:14px}
+  .tv-lv p{font-size:16px;line-height:1.55;max-width:320px}
+  .tf-sticky{position:static;background:none;padding:8px 0 0;width:max-content;margin:0 auto}
+  .tf-food{gap:16px;padding:12px 0}
+  .tf-food img{width:64px;height:64px}
+  .tf-name{font-size:23px}
+  .tf-sub{font-size:13px;margin-top:2px}
+  .tf-dot{width:16px;height:16px}
+  .tv-prog{display:flex;justify-content:center;gap:8px;margin:24px 0 0}
+}
+</style>
+
+<section class="tv-sec" id="levels" data-tv="B3">
+  <div class="tvb2-head">
+    <span class="kicker">Set your triggers</span>
+    <h2>Every body reacts in <em class="accent brand">its own way</em></h2>
+    <p class="lede">Tolerance is rarely all or nothing, so you decide how strict to be with each chemical. Say histamine is <em class="accent brand">your trigger</em>.</p>
+  </div>
+  <div class="tf-grid">
+    <div class="tv-flow">
+      <article class="tv-lv" style="--ul:#D95E34"><h3><span class="tv-nm">Avoid</span></h3><p>The full break, for a chemical that has <br class="br-m">no place in your diet right now.</p></article>
+      <article class="tv-lv" style="--ul:#E8A050"><h3><span class="tv-nm">Limit</span></h3><p>For a trigger you keep low without <br class="br-m">cutting out completely.</p></article>
+      <article class="tv-lv" style="--ul:#EBD573"><h3><span class="tv-nm">Watch</span></h3><p>Watching without restricting, for a trigger <br class="br-m">you’re still figuring out.</p></article>
+      <article class="tv-lv" style="--ul:#A7CE67"><h3><span class="tv-nm">Eat freely</span></h3><p>For a chemical that fits easily on your plate.</p></article>
+    </div>
+    <div class="tf-sticky">
+      <div class="tf-food"><span class="tf-dot" data-food="high"></span><img src="assets/food/parmesan.png" alt=""><span class="tf-tx"><span class="tf-name">Parmesan</span><span class="tf-sub">High histamine</span></span></div>
+      <div class="tf-food"><span class="tf-dot" data-food="medium"></span><img src="assets/food/chickpeas.png" alt=""><span class="tf-tx"><span class="tf-name">Chickpeas</span><span class="tf-sub">Medium histamine</span></span></div>
+      <div class="tf-food"><span class="tf-dot" data-food="low"></span><img src="assets/food/blueberry.png" alt=""><span class="tf-tx"><span class="tf-name">Blueberries</span><span class="tf-sub">Low histamine</span></span></div>
+      <div class="tv-prog" aria-hidden="true"><b class="on"></b><b></b><b></b><b></b></div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const G="#A7CE67", Y="#EBD573", R="#D95E34";
+  const MAP={ high:[R,R,Y,G], medium:[R,Y,Y,G], low:[G,G,G,G] };
+  document.querySelectorAll('[data-tv="B3"]').forEach(root=>{
+    const items=[...root.querySelectorAll(".tv-lv")];
+    let vhStable=innerHeight;
+    addEventListener('resize',()=>{ if(Math.abs(innerHeight-vhStable)>150) vhStable=innerHeight; });
+    let cur=-1;
+    function setFoods(idx){
+      if(idx===cur) return; cur=idx;
+      root.querySelectorAll("[data-food]").forEach(d=>{
+        const c=MAP[d.dataset.food][idx];
+        if(d.style.background!==c){ d.classList.remove("pop"); void d.offsetWidth; d.classList.add("pop"); }
+        d.style.background=c;
+      });
+    }
+    let raf=0;
+    const progDots=[...root.querySelectorAll(".tv-prog b")];
+    function activate(idx){
+      items.forEach((x,i)=>x.classList.toggle("active", i===idx));
+      progDots.forEach((d,i)=>d.classList.toggle("on", i===idx));
+      setFoods(idx);
+    }
+    const isMobile=()=>innerWidth<=880;
+    function update(){
+      raf=0;
+      if(isMobile()){
+        // pinned stage: level advances with page scroll through the section
+        const total=root.offsetHeight-vhStable;
+        const scrolled=Math.min(Math.max(-root.getBoundingClientRect().top,0),Math.max(total,1));
+        const p=total>0?scrolled/total:0;
+        activate(Math.min(items.length-1,Math.floor(p*items.length+1e-6)));
+        return;
+      }
+      const vc=innerHeight*0.5;
+      let best=0, bd=Infinity;
+      items.forEach((el,i)=>{
+        const r=el.getBoundingClientRect();
+        const d=Math.abs((r.top+r.bottom)/2 - vc);
+        if(d<bd){ bd=d; best=i; }
+      });
+      activate(best);
+    }
+    const flow=root.querySelector(".tv-flow"), foods=root.querySelector(".tf-sticky");
+    const head=root.querySelector(".tvb2-head"), grid=root.querySelector(".tf-grid");
+    function layoutTail(){
+      if(isMobile()){
+        flow.style.paddingBottom="";
+        foods.style.top="";
+        grid.style.top=(68 + head.offsetHeight)+"px";
+        return;
+      }
+      grid.style.top="";
+      const pad=Math.max(0, foods.offsetHeight/2 - items[items.length-1].offsetHeight/2);
+      flow.style.paddingBottom=Math.round(pad)+"px";
+      // pin the foods right below the pinned section header (nav 68px + header height)
+      foods.style.top=(68 + head.offsetHeight + 26)+"px";
+    }
+    addEventListener("scroll",()=>{ if(!raf) raf=requestAnimationFrame(update); },{passive:true});
+
+    addEventListener("resize",()=>{ layoutTail(); if(!raf) raf=requestAnimationFrame(update); });
+    layoutTail(); update();
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(layoutTail);
+  });
+})();
+</script>
+
+<!-- ===================== FEATURES (Atoms-style pinned: phone left, text right, screen + copy change on scroll) ===================== -->
+<section class="feat3" id="features">
+  <div class="wrap feat3-head2 feat3-head2--out">
+    <span class="kicker">Inside the app</span>
+    <p class="feat3-sub">The whole story behind every food in one place</p>
+  </div>
+  <div class="feat3-scroll" id="feat3Scroll">
+    <div class="feat3-pin">
+      <div class="wrap feat3-stage">
+        <div class="feat3-head2">
+          <span class="kicker">Inside the app</span>
+          <p class="feat3-sub">The whole story behind every food in one place</p>
+        </div>
+        <div class="feat3-card">
+          <div class="feat3-cardclip"><canvas class="feat3-dots" id="feat3Dots" aria-hidden="true"></canvas></div>
+
+        <div class="feat3-phone">
+          <div class="phone">
+            <div class="screen">
+              <div class="statusbar"><span>9:41</span><svg width="34" height="11" viewBox="0 0 34 11" fill="var(--text)"><rect x="0" y="6" width="2.5" height="4" rx="1"/><rect x="4" y="4" width="2.5" height="6" rx="1"/><rect x="8" y="2" width="2.5" height="8" rx="1"/><rect x="15" y="1" width="16" height="9" rx="2.5" fill="none" stroke="var(--text)" stroke-width="1"/><rect x="17" y="3" width="10" height="5" rx="1"/><rect x="32" y="4" width="1.5" height="3" rx=".75"/></svg></div>
+              <div class="feat3-screens">
+
+                <!-- Screen 0 — Food Detail Card (FoodDetailSheet chemical card) -->
+                <div class="feat3-screen active" data-s="0">
+                  <div class="fdsheet">
+                    <div class="fds-arc" style="background:#D46848"></div>
+                    <div class="fds-card">
+                      <div class="fds-img"><img src="assets/food/cocoa-powder.png" alt="Cocoa powder"></div>
+                      <div class="fds-name"><span class="fds-dot" style="background:var(--red)"></span>Cocoa powder</div>
+                      <div class="fds-cat">Condiments</div>
+                      <p class="fds-desc">A fine, deep-brown powder pressed from roasted cacao beans, intensely bitter and chocolatey.</p>
+                    </div>
+                  </div>
+                  <div class="fdc">
+                    <div class="fdc-h">Chemicals in this food</div>
+                    <p class="fdc-desc">Red because you avoid sulfur and keep oxalates low — at these levels, each one alone makes it red.</p>
+                    <div class="fdc-grp">Your active triggers</div>
+                    <div class="fdc-row"><span class="bdg" style="background:var(--red)">O</span><span class="fdc-name">Oxalate</span><span class="fdc-lvl">High</span><span class="fdc-comf" style="--uc:#E8A84C">Limit</span></div>
+                    <div class="fdc-row"><span class="bdg" style="background:var(--yellow)">Su</span><span class="fdc-name">Sulfur</span><span class="fdc-lvl">Medium</span><span class="fdc-comf" style="--uc:var(--red)">Avoid</span></div>
+                    <div class="fdc-grp" style="margin-top:18px">Other chemicals in this food</div>
+                    <div class="fdc-row"><span class="bdg" style="background:var(--red)">H</span><span class="fdc-name">Histamine</span><span class="fdc-lvl">High</span><span class="fdc-comf" style="--uc:var(--green)">Eat freely</span></div>
+                    <div class="fdc-row"><span class="bdg" style="background:var(--green)">F</span><span class="fdc-name">FODMAP</span><span class="fdc-lvl">Low</span><span class="fdc-comf" style="--uc:var(--green)">Eat freely</span></div>
+                    <div class="fdc-row" style="margin-bottom:8px"><span class="bdg" style="background:var(--green)">L</span><span class="fdc-name">Lactose</span><span class="fdc-lvl">Free</span><span class="fdc-comf" style="--uc:var(--green)">Eat freely</span></div>
+                  </div>
+                </div>
+
+                <!-- Screen 1 — Override: the real tolerance-change bottom-sheet popup over the food list -->
+                <div class="feat3-screen feat3-screen--popup feat3-ovrpop ovr-up" data-s="1">
+                  <div class="anp-bg" aria-hidden="true">
+                    <div class="anp-bg-h">Your personal food list</div>
+                    <div class="anp-bg-stats">
+                      <div><div class="statrow"><span class="d" style="background:var(--green)"></span><b>96</b></div><i>work well</i></div>
+                      <div><div class="statrow"><span class="d" style="background:var(--yellow)"></span><b>38</b></div><i>pay attention</i></div>
+                      <div><div class="statrow"><span class="d" style="background:var(--red)"></span><b>373</b></div><i>avoid for now</i></div>
+                    </div>
+                    <div class="anp-trig">
+                      <div class="anp-trig-top"><small>3 ACTIVE TRIGGERS</small><span class="anp-pencil"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9.5 2.5l2 2L5 11l-2.5.5L3 9l6.5-6.5z" stroke-linejoin="round"/></svg></span></div>
+                      <div class="anp-trig-pills"><span style="--u:#E8A84C">Histamine</span><span style="--u:#E8A84C">Lactose</span><span style="--u:var(--red)">Gluten</span></div>
+                    </div>
+                    <div class="anp-flist">
+                      <div class="anp-frow"><span class="dot2" id="rlDot"></span><img src="assets/food/red-lentils.png" alt=""><div class="nm2wrap"><span class="nm2">Red lentils</span></div><span class="bdgs"><span class="bdg2" style="background:var(--yellow)">H</span></span></div>
+                      <div class="anp-frow"><span class="dot2" style="background:var(--yellow)"></span><img src="assets/food/chickpeas.png" alt=""><div class="nm2wrap"><span class="nm2">Chickpeas</span></div><span class="bdgs"><span class="bdg2" style="background:var(--yellow)">H</span></span></div>
+                      <div class="anp-frow"><span class="dot2" style="background:var(--red)"></span><img src="assets/food/black-beans.png" alt=""><div class="nm2wrap"><span class="nm2">Black beans</span></div><span class="bdgs"><span class="bdg2" style="background:var(--red)">H</span></span></div>
+                      <div class="anp-frow"><span class="dot2" style="background:var(--red)"></span><img src="assets/food/kidney-beans.png" alt=""><div class="nm2wrap"><span class="nm2">Kidney beans</span></div><span class="bdgs"><span class="bdg2" style="background:var(--red)">H</span></span></div>
+                      <div class="anp-frow"><span class="dot2" style="background:var(--red)"></span><img src="assets/food/green-lentils.png" alt=""><div class="nm2wrap"><span class="nm2">Green lentils</span></div><span class="bdgs"><span class="bdg2" style="background:var(--red)">H</span></span></div>
+                    </div>
+                  </div>
+                  <div class="anp-scrim"></div>
+                  <div class="anp-sheet ovr-sheet">
+                    <div class="anp-handle"></div>
+                    <div class="anp-x"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3l8 8M11 3l-8 8" stroke-linecap="round"/></svg></div>
+                    <div class="anp-img"><img src="assets/food/red-lentils.png" alt="Red lentils"></div>
+                    <div class="anp-name"><span class="fds-dot" style="background:var(--yellow)"></span>Red lentils</div>
+                    <div class="anp-sub">Change your tolerance level for this food. Your choice will override the general settings.</div>
+                    <div class="ovr-opts">
+                      <div class="ovr-opt2 sel" data-flag="green"><span class="ovr-dot2" style="background:var(--green)"></span><span class="ovr-txt"><b>Move to green list</b><span>Works well for me</span></span></div>
+                      <div class="ovr-opt2" data-flag="red"><span class="ovr-dot2" style="background:var(--red)"></span><span class="ovr-txt"><b>Move to red list</b><span>I avoid this</span></span></div>
+                    </div>
+                    <div class="ovr-save active" id="ovrSave">Save this</div>
+                  </div>
+                </div>
+
+                <!-- Screen 2 — Notes: the real "Add note" bottom-sheet popup over the food list -->
+                <!-- Screen 3 — NutrientDetailScreen: Magnesium + richest tolerated sources -->
+                <div class="feat3-screen" data-s="2">
+                  <div class="ndt-eyebrow">Minerals</div>
+                  <div class="ndt-title">Magnesium</div>
+                  <p class="ndt-desc">Your body uses magnesium for your muscles, your nerves, and making energy. Falling short is surprisingly common, partly because processed diets tend to be low in it.</p>
+                  <div class="ndt-h">Where to get Magnesium</div>
+                  <div class="ndt-sub">The richest sources among the foods you tolerate.</div>
+                  <div class="nut">
+                    <div class="nrow"><span class="tol" style="background:var(--green)"></span><img class="pic" src="assets/food/pumpkin-seeds.png" alt=""><span class="nname">Pumpkin seeds</span><span class="nsrc">Excellent source</span></div>
+                    <div class="nrow"><span class="tol" style="background:var(--green)"></span><img class="pic" src="assets/food/almonds.png" alt=""><span class="nname">Almonds</span><span class="nsrc">Excellent source</span></div>
+                    <div class="nrow"><span class="tol" style="background:var(--green)"></span><img class="pic" src="assets/food/black-beans.png" alt=""><span class="nname">Black beans</span><span class="nsrc">Good source</span></div>
+                    <div class="nrow"><span class="tol" style="background:var(--yellow)"></span><img class="pic" src="assets/food/cashews.png" alt=""><span class="nname">Cashews</span><span class="nsrc">Excellent source</span></div>
+                    <div class="ndt-showall">Show all 12</div>
+                  </div>
+                </div>
+
+                <!-- Screen 3 — History: olive header + pills, beige monthly summary, white card of text rows -->
+                <div class="feat3-screen feat3-screen--hist" data-s="3">
+                  <div class="hh">
+                    <i class="hd" style="left:12%;top:16%;width:7px;height:7px;opacity:.4"></i>
+                    <i class="hd" style="left:82%;top:12%;width:10px;height:10px;opacity:.25"></i>
+                    <i class="hd" style="left:66%;top:34%;width:5px;height:5px;opacity:.45"></i>
+                    <i class="hd" style="left:90%;top:56%;width:6px;height:6px;opacity:.3"></i>
+                    <i class="hd" style="left:5%;top:60%;width:12px;height:12px;opacity:.16"></i>
+                    <i class="hd" style="left:38%;top:10%;width:4px;height:4px;opacity:.5"></i>
+                    <div class="hh-t">History</div>
+                    <div class="hh-pills"><span class="on">Triggers</span><span>Overrides</span><span>Notes</span><span>Summary</span></div>
+                  </div>
+                  <div class="hist-body">
+                    <div class="msum">
+                      <div class="msum-top"><span class="msum-month">July 2026</span><span class="msum-q">?</span></div>
+                      <div class="msum-row">
+                        <span class="msum-item"><i style="background:var(--green)"></i><b>438</b><em>(+6)</em></span>
+                        <span class="msum-item"><i style="background:var(--yellow)"></i><b>41</b><em>(+2)</em></span>
+                        <span class="msum-item"><i style="background:var(--red)"></i><b>27</b><em>(+1)</em></span>
+                        <svg class="msum-chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4.5L6 8l3.5-3.5"/></svg>
+                      </div>
+                    </div>
+                    <div class="hist-day">Today</div>
+                    <div class="hcard">
+                      <div class="hrow"><span class="hist-tx"><span class="hist-t">Zucchini</span><span class="hist-d">Manual override</span><span class="hdots"><i style="background:var(--yellow)"></i><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 6h8M7 3l3 3-3 3"/></svg><i style="background:var(--green)"></i></span></span><span class="hist-time">14:02</span></div>
+                      <div class="hrow"><span class="hist-tx"><span class="hist-t">Note added</span><span class="hist-d">Apple &middot; &ldquo;Half an apple is fine&rdquo;</span></span><span class="hist-time">11:15</span></div>
+                      <div class="hrow"><span class="hist-tx"><span class="hist-t">Histamine set to Limit</span><span class="hist-d">14 foods moved</span></span><span class="hist-time">09:41</span></div>
+                      <div class="hrow"><span class="hist-tx"><span class="hist-t">Quiz completed</span><span class="hist-d">Patterns detected: Oxalate, Sulfur</span></span><span class="hist-time">09:12</span></div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="feat3-copy" id="feat3Copy">
+          <div class="f3 active">
+            <h2>Clear on what <br><em>you eat</em></h2>
+            <p>Open any food to see which of the 7 chemicals it contains, and why it lands at your tolerance level.</p>
+          </div>
+          <div class="f3">
+            <h2>A list that stays <em>true to you</em></h2>
+            <p>Move any food to green, yellow, or red whenever it matches how you really feel.</p>
+          </div>
+          <div class="f3">
+            <h2>Well-nourished even on <br class="br-m"><em>a limited diet</em></h2>
+            <p>Pick any nutrient, from iron to magnesium, and see which of the foods you tolerate have the most.</p>
+          </div>
+          <div class="f3">
+            <h2>Your food history <em>over time</em></h2>
+            <p>Look back on how your list changes as you go.</p>
+          </div>
+          <div class="feat3-prog" id="feat3Prog" aria-hidden="true"><b class="on"></b><b></b><b></b><b></b></div>
+        </div>
+        </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===================== FAQ ===================== -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="faq-head rv">
+      <span class="kicker">Frequently asked questions</span>
+      <h2>Anything else you'd like to <em class="accent brand">know</em>?</h2>
+    </div>
+    <div class="faq-list rv rv-d1">
+      <details>
+        <summary>What do I get with Rio?<span class="pl"><svg viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke-linecap="round"/></svg></span></summary>
+        <p class="faq-a">A personal food list of 500+ whole foods, each with your own tolerance level: from what works well to what's best avoided. You'll also see which foods on your list are the richest sources of each nutrient, so you can cover any gaps with foods you actually tolerate.</p>
+      </details>
+      <details>
+        <summary>Is this a subscription?<span class="pl"><svg viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke-linecap="round"/></svg></span></summary>
+        <p class="faq-a">No, the app is completely free.</p>
+      </details>
+      <details>
+        <summary>Will this work for my specific intolerances?<span class="pl"><svg viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke-linecap="round"/></svg></span></summary>
+        <p class="faq-a">Yes, whether you have one intolerance or several overlapping ones, the list is shaped around exactly the chemicals you react to. For each one, you decide how far to limit it in your diet.</p>
+      </details>
+      <details>
+        <summary>Can I change the list to match how I really react?<span class="pl"><svg viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke-linecap="round"/></svg></span></summary>
+        <p class="faq-a">Yes, and since everyone's reactions are a little different, you can change any food to match what your body actually tells you.</p>
+      </details>
+      <details>
+        <summary>What if the food I'm looking for isn't in the list?<span class="pl"><svg viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke-linecap="round"/></svg></span></summary>
+        <p class="faq-a">The app covers 500+ whole foods right now. If something's missing, just write to us at <a href="mailto:hello@riofoodplan.com">hello@riofoodplan.com</a> and we'll add it.</p>
+      </details>
+      <details>
+        <summary>Where does the food data come from?<span class="pl"><svg viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke-linecap="round"/></svg></span></summary>
+        <p class="faq-a">The chemical content of every food is based on published scientific research and trusted data sources. Where the data disagrees, the more careful number is used.</p>
+      </details>
+        </div>
+  </div>
+</section>
+
+<!-- ===================== FINAL CTA ===================== -->
+<section class="final">
+  <div class="wrap rv">
+    <h2>Let’s find out what your body <br><span class="line2">thinks about food.</span></h2>
+    <a class="appstore" href="#">
+      <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
+      <span class="as-text">
+        <span class="as-small">Download on the</span>
+        <span class="as-big">App Store</span>
+      </span>
+    </a>
+    <p class="cta-note">Free to download and use.</p>
+  </div>
+</section>
+
+<!-- ===================== MARQUEES (relocated to bottom — TBD) =====================
+<section class="marquee-zone" aria-label="Symptoms and chemicals Rio covers">
+  <div class="marquee">
+    <div class="marquee-track" id="mq1">
+      <span class="m-item">Bloating after onions</span>
+      <span class="m-sep" style="background:var(--yellow)"></span>
+      <span class="m-item">Headache from leftovers</span>
+      <span class="m-sep" style="background:var(--green)"></span>
+      <span class="m-item">Brain fog after bread</span>
+      <span class="m-sep" style="background:var(--brand)"></span>
+      <span class="m-item">Fine fresh, sick reheated</span>
+      <span class="m-sep" style="background:var(--red)"></span>
+      <span class="m-item">Flushing after wine</span>
+      <span class="m-sep" style="background:var(--yellow)"></span>
+      <span class="m-item">Reacting to spices</span>
+      <span class="m-sep" style="background:var(--green)"></span>
+    </div>
+  </div>
+  <div class="marquee reverse">
+    <div class="marquee-track" id="mq2">
+      <span class="m-item m-chem">Histamine</span>
+      <span class="m-sep" style="background:var(--yellow)"></span>
+      <span class="m-item m-chem">Salicylates</span>
+      <span class="m-sep" style="background:var(--green)"></span>
+      <span class="m-item m-chem">Lactose</span>
+      <span class="m-sep" style="background:var(--brand)"></span>
+      <span class="m-item m-chem">Oxalates</span>
+      <span class="m-sep" style="background:var(--red)"></span>
+      <span class="m-item m-chem">FODMAPs</span>
+      <span class="m-sep" style="background:var(--yellow)"></span>
+      <span class="m-item m-chem">Sulfur</span>
+      <span class="m-sep" style="background:var(--green)"></span>
+      <span class="m-item m-chem">Gluten</span>
+      <span class="m-sep" style="background:var(--brand)"></span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-links">
+        <a href="support.html">Support</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="impressum.html">Impressum</a>
+      </div>
+      <div class="foot-contact">
+        <a href="mailto:hello@riofoodplan.com">hello@riofoodplan.com</a>
+        <a class="foot-ig" href="https://www.instagram.com/rio_foodplan/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="17" height="17" aria-hidden="true" style="flex:none"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>Instagram</a>
+      </div>
+    </div>
+    <div class="foot-disclaimer">
+      <span class="fd-label">Important to know</span>
+      <p>Rio is a lifestyle and educational app, not a medical device. It doesn’t diagnose, treat, cure, or prevent any illness, and it’s never a substitute for professional medical advice. If you have health concerns, suspect a food intolerance or allergy, or plan major changes to your diet, talk to a qualified healthcare professional first.</p>
+    </div>
+    <p class="copyright">© 2026 Soba Apps · Berlin</p>
+  </div>
+</footer>
+
+<script>
+/* duplicate marquee tracks + the phone food list for seamless looping scroll */
+for (const id of ['mq1','mq2','foodlistTrack']) {
+  const t = document.getElementById(id);
+  if (t) t.innerHTML += t.innerHTML;
+}
+
+/* scroll reveal */
+const io = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+/* How it works — one centred ball that recolours red→yellow→green as you scroll;
+   number, title and the left 3-dot progress update per step (Atoms "why different" mechanic). */
+(function(){
+  const scroll = document.getElementById('howScroll');
+  const ball   = document.getElementById('howBall');
+  if (!scroll || !ball) return;
+
+  const BALL_COLORS = ['#C9502F','#CE9420','#7E9140'];           // terracotta · ochre · olive
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nums   = [...ball.querySelectorAll('.ball-num')];
+  const titles = [...document.querySelectorAll('#howTitles > div')];
+  const pdots  = [...document.querySelectorAll('#howProg .pdot')];
+
+  // --- scroll → step controller ---
+  if (reduce) return;
+  const N = 3;
+  let cur = -1, ticking = false;
+  function setStep(idx){
+    cur = idx;
+    ball.style.setProperty('--ball', BALL_COLORS[idx]);
+    nums.forEach((el, i) => el.classList.toggle('active', i === idx));
+    titles.forEach((el, i) => el.classList.toggle('active', i === idx));
+    pdots.forEach((el, i) => el.classList.toggle('on', i === idx));   // only the current step is orange
+  }
+  function update(){
+    ticking = false;
+    const total = scroll.offsetHeight - innerHeight;
+    const scrolled = Math.min(Math.max(-scroll.getBoundingClientRect().top, 0), total);
+    const p = total > 0 ? scrolled / total : 0;
+    const idx = Math.min(N - 1, Math.floor(p * N + 1e-6));
+    if (idx !== cur) setStep(idx);
+  }
+  function onScroll(){ if (!ticking){ ticking = true; requestAnimationFrame(update); } }
+  addEventListener('scroll', onScroll, {passive:true});
+  addEventListener('resize', onScroll);
+  setStep(0); update();
+})();
+
+/* features — green floating dot field behind the phone */
+(function(){
+  const canvas=document.getElementById('feat3Dots');
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  const tones=['#C4E08A','#4D5F26','#FFF8EC','#D4882A'];          // leaf light/dark, cream, brand gold
+  const SEED=23, DENSITY=2.1, SOFT_RATIO=0.28, reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let dots=[],W=0,H=0,dpr=Math.min(window.devicePixelRatio||1,2),running=false;
+  function build(){
+    const r=(()=>{let s=SEED>>>0;return()=>(s=(s*9301+49297)%233280)/233280;})();
+    const rect=canvas.getBoundingClientRect(); W=rect.width; H=rect.height; if(!W||!H) return;
+    canvas.width=Math.round(W*dpr); canvas.height=Math.round(H*dpr); ctx.setTransform(dpr,0,0,dpr,0,0);
+    // sparse "drifted-in" dots, only in the free zones (left strip + right corners)
+    const softT=1-SOFT_RATIO; dots=[];
+    const zones=[{x0:0.02,x1:0.17,y0:0.06,y1:0.94,n:9,s:1.6},{x0:0.86,x1:0.975,y0:0.05,y1:0.20,n:3,s:1.7},{x0:0.88,x1:0.975,y0:0.78,y1:0.95,n:3,s:1.8}];
+    for(const z of zones) for(let i=0;i<z.n;i++){ const soft=r()>softT;
+      dots.push({ux:z.x0+r()*(z.x1-z.x0),uy:z.y0+r()*(z.y1-z.y0),size:(soft?16+r()*18:4+r()*7)*(z.s||1),tone:Math.min(3,Math.floor(r()*4)),
+        opacity:soft?0.18+r()*0.18:0.50+r()*0.28,phase:r()*Math.PI*2,ax:5+r()*8,ay:5+r()*8,speed:0.40+r()*0.55,pulse:0.30+r()*0.60}); }
+  }
+  function frame(now){
+    if(!running) return; const t=now/1000; ctx.clearRect(0,0,W,H);
+    for(const d of dots){
+      const dx=Math.sin(t*d.speed+d.phase)*d.ax+Math.sin(t*d.speed*0.43+d.phase*2.1)*d.ax*0.45;
+      const dy=Math.cos(t*d.speed*0.8+d.phase)*d.ay+Math.cos(t*d.speed*0.5+d.phase*0.7)*d.ay*0.55;
+      const op=d.opacity*(0.78+0.22*Math.sin(t*d.pulse+d.phase));
+      ctx.globalAlpha=Math.max(0,op); ctx.fillStyle=tones[d.tone];
+      ctx.beginPath(); ctx.arc(d.ux*W+dx,d.uy*H+dy,d.size/2,0,Math.PI*2); ctx.fill();
+    }
+    ctx.globalAlpha=1; requestAnimationFrame(frame);
+  }
+  build();
+  if(reduce){ running=true; running=false; frame(0); }
+  else { const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting&&!running){running=true;requestAnimationFrame(frame);} else if(!e.isIntersecting){running=false;} }),{threshold:0.01}); io.observe(canvas); }
+  let rt; addEventListener('resize',()=>{clearTimeout(rt); rt=setTimeout(build,200);});
+})();
+
+/* merged "7 chemicals + science" — yellow floating dot field (same engine, warmer palette) */
+(function(){
+  const canvas=document.getElementById('mergeDots');
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  const tones=['#E07A5F','#8C2F16','#FFF8EC','#EFC668'];          // Welcome slide 1: light/deep terracotta, cream, honey speck
+  const SEED=41, DENSITY=2.1, SOFT_RATIO=0.28, reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let dots=[],W=0,H=0,dpr=Math.min(window.devicePixelRatio||1,2),running=false;
+  function build(){
+    const r=(()=>{let s=SEED>>>0;return()=>(s=(s*9301+49297)%233280)/233280;})();
+    const rect=canvas.getBoundingClientRect(); W=rect.width; H=rect.height; if(!W||!H) return;
+    canvas.width=Math.round(W*dpr); canvas.height=Math.round(H*dpr); ctx.setTransform(dpr,0,0,dpr,0,0);
+    // sparse "drifted-in" dots: only in the free zones (top-right of the header, bottom-right corner)
+    const softT=1-SOFT_RATIO; dots=[];
+    const zones=[{x0:0.60,x1:0.97,y0:0.04,y1:0.22,n:7},{x0:0.02,x1:0.12,y0:0.82,y1:0.96,n:3,s:1.7}];
+    for(const z of zones) for(let i=0;i<z.n;i++){ const soft=r()>softT;
+      dots.push({ux:z.x0+r()*(z.x1-z.x0),uy:z.y0+r()*(z.y1-z.y0),size:(soft?16+r()*18:4+r()*7)*(z.s||1),tone:Math.min(3,Math.floor(r()*4)),
+        opacity:soft?0.16+r()*0.16:0.40+r()*0.26,phase:r()*Math.PI*2,ax:5+r()*8,ay:5+r()*8,speed:0.40+r()*0.55,pulse:0.30+r()*0.60}); }
+  }
+  function frame(now){
+    if(!running) return; const t=now/1000; ctx.clearRect(0,0,W,H);
+    for(const d of dots){
+      const dx=Math.sin(t*d.speed+d.phase)*d.ax+Math.sin(t*d.speed*0.43+d.phase*2.1)*d.ax*0.45;
+      const dy=Math.cos(t*d.speed*0.8+d.phase)*d.ay+Math.cos(t*d.speed*0.5+d.phase*0.7)*d.ay*0.55;
+      const op=d.opacity*(0.78+0.22*Math.sin(t*d.pulse+d.phase));
+      ctx.globalAlpha=Math.max(0,op); ctx.fillStyle=tones[d.tone];
+      ctx.beginPath(); ctx.arc(d.ux*W+dx,d.uy*H+dy,d.size/2,0,Math.PI*2); ctx.fill();
+    }
+    ctx.globalAlpha=1; requestAnimationFrame(frame);
+  }
+  build();
+  if(reduce){ running=true; running=false; frame(0); }
+  else { const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting&&!running){running=true;requestAnimationFrame(frame);} else if(!e.isIntersecting){running=false;} }),{threshold:0.01}); io.observe(canvas); }
+  let rt; addEventListener('resize',()=>{clearTimeout(rt); rt=setTimeout(build,200);});
+})();
+
+/* features — pinned: change the phone screen + the copy as you scroll through the 3 steps */
+(function(){
+  const scroll=document.getElementById('feat3Scroll');
+  if(!scroll) return;
+  const screens=[...document.querySelectorAll('.feat3-screen')];
+  const copies=[...document.querySelectorAll('#feat3Copy .f3')];
+  const prog=[...document.querySelectorAll('#feat3Prog b')];
+  const N=screens.length;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let ticking=false,cur=-1;
+  // iOS: innerHeight breathes as the Safari bars collapse; re-mapping progress to it
+  // makes states flip mid-scroll. Freeze the height, refresh only on real resizes.
+  let vhStable=innerHeight;
+  addEventListener('resize',()=>{ if(Math.abs(innerHeight-vhStable)>150) vhStable=innerHeight; });
+  function update(){
+    ticking=false;
+    const total=scroll.offsetHeight-vhStable;
+    const scrolled=Math.min(Math.max(-scroll.getBoundingClientRect().top,0),total);
+    const p=total>0?scrolled/total:0;
+    const idx=Math.min(N-1,Math.floor(p*N+1e-6));
+    if(idx!==cur){ cur=idx;
+      screens.forEach((s,i)=>s.classList.toggle('active',i===idx));
+      copies.forEach((c,i)=>c.classList.toggle('active',i===idx));
+      prog.forEach((d,i)=>d.classList.toggle('on',i===idx));
+    }
+  }
+  function onScroll(){ if(!ticking){ticking=true;requestAnimationFrame(update);} }
+  addEventListener('scroll',onScroll,{passive:true}); addEventListener('resize',onScroll); update();
+})();
+
+/* flip cards — tap to flip on touch / click (hover handles desktop) */
+document.querySelectorAll('.flipcard').forEach(c=>{
+  c.addEventListener('click',()=>c.classList.toggle('flipped'));
+});
+
+/* touch devices get no hover hint — demo the flip once: first card turns over and back */
+if(matchMedia('(hover: none)').matches){
+  const first=document.querySelector('.flipcard');
+  if(first){
+    const io=new IntersectionObserver(es=>{
+      es.forEach(e=>{
+        if(!e.isIntersecting) return;
+        io.disconnect();
+        setTimeout(()=>{
+          first.classList.add('flipped');
+          setTimeout(()=>first.classList.remove('flipped'),1600);
+        },700);
+      });
+    },{threshold:.6});
+    io.observe(first);
+  }
+}
+
+</script>
+
+<!-- Rio · How it works (user-provided section controller) -->
+<script>
+(function(){
+  // ── content ──
+  const STEPS = [
+    { n:"1", color:"#D45838", h:"Uncover your food triggers",
+      s:"A few simple questions about how food makes you feel point to your most likely triggers, and to where they overlap." },
+    { n:"2", color:"#E0B93A", h:"Get a personal food list",
+      s:"Over 500 whole foods, showing what likely works for your body and what doesn't. And it keeps changing as your body does." },
+    { n:"3", color:"#8DAD45", h:"See the nutrients in the foods you tolerate",
+      s:"Iron, magnesium, calcium and 20+ more, each with the foods from your list that give you the most of it." },
+  ];
+
+  document.querySelectorAll("[data-rio-hiw]").forEach(initSection);
+
+  function initSection(root){
+    const viewport = root.querySelector(".rio-hiw__viewport");
+    const strip    = root.querySelector("[data-strip]");
+    const panels   = [...strip.children];
+    const dotsEl   = root.querySelector("[data-dots]");
+    const fillEl   = root.querySelector("[data-fill]");
+    const prevBtn  = root.querySelector("[data-prev]");
+    const nextBtn  = root.querySelector("[data-next]");
+    const N = panels.length;
+    let i = 0;
+
+
+    STEPS.forEach((_, idx) => { const b=document.createElement("b"); b.addEventListener("click",()=>go(idx)); dotsEl.appendChild(b); });
+    const dots=[...dotsEl.children];
+
+    // panel = one viewport minus a peek, so the NEXT number always sticks out on the right
+    function peek(){ return matchMedia("(max-width:680px)").matches ? 56 : 360; }
+    function panelW(){ return Math.max(300, viewport.clientWidth - peek()); }
+    function layout(){ const pw=panelW(); panels.forEach(p=>p.style.flexBasis=pw+"px"); strip.style.transform="translateX("+(-i*pw)+"px)"; }
+
+    function paint(){
+      const st=STEPS[i];
+      dots.forEach((d,idx)=>{ const on=idx===i; d.style.background=on?"#D4882A":""; d.style.opacity=on?"1":""; d.style.width=on?"24px":"6px"; });   // active = orange elongated pill, others stay grey dots
+      if(fillEl) fillEl.style.transform="translateX("+(i*100)+"%)";
+      prevBtn.disabled=i===0; nextBtn.disabled=i===N-1;
+      prevBtn.style.opacity=i===0?".4":""; nextBtn.style.opacity=i===N-1?".4":"";
+    }
+
+    function go(idx){ i=Math.max(0,Math.min(N-1,idx)); layout(); paint(); }
+
+    nextBtn.addEventListener("click",()=>go(i+1));
+    prevBtn.addEventListener("click",()=>go(i-1));
+
+    // trackpad horizontal swipe (wheel deltaX) — one swipe = one step; also blocks browser back-swipe
+    let wheelLock=false, wheelTimer=null;
+    root.addEventListener("wheel",(e)=>{
+      if(Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;   // vertical intent → let the page scroll
+      e.preventDefault();
+      if(wheelLock) return;
+      if(Math.abs(e.deltaX) > 16){
+        go(e.deltaX > 0 ? i+1 : i-1);
+        wheelLock=true;
+        clearTimeout(wheelTimer);
+        wheelTimer=setTimeout(()=>{ wheelLock=false; }, 600);
+      }
+    }, {passive:false});
+
+    // touch swipe (mobile)
+    let tx=0, ty=0;
+    root.addEventListener("touchstart",(e)=>{ tx=e.touches[0].clientX; ty=e.touches[0].clientY; }, {passive:true});
+    root.addEventListener("touchend",(e)=>{
+      const dx=e.changedTouches[0].clientX - tx, dy=e.changedTouches[0].clientY - ty;
+      if(Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) go(dx < 0 ? i+1 : i-1);
+    }, {passive:true});
+
+    addEventListener("resize", layout);
+
+    layout(); paint();
+  }
+})();
+</script>
+</body>
+</html>
