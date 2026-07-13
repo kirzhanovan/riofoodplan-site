@@ -904,11 +904,13 @@ footer{background:var(--text);color:#D9CFC6;padding:64px 0 40px;font-size:14.5px
 }
 </style>
 <style id="navtest2-fix">
-/* TEST 2 (single variable): opaque cream nav, no translucency/blur.
-   In-app browsers (Telegram) tint their bar from the page's top strip; a
-   translucent nav lets the honey hero bleed through, so the bar reads honey.
-   A solid cream nav means the sampled strip is unambiguously cream. */
-nav{ background:#FFFDF8 !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; }
+/* NAVTEST2-MOBILE-SCOPED: opaque cream nav ONLY on mobile widths.
+   The Telegram in-app browser (phone) tints its top bar from the page; a
+   translucent nav lets the honey hero bleed through -> honey bar. Solid cream
+   nav on mobile -> the sampled strip is cream. Desktop keeps its frosted look. */
+@media (max-width: 880px){
+  nav{ background:#FFFDF8 !important; -webkit-backdrop-filter:none !important; backdrop-filter:none !important; }
+}
 </style>
 </head>
 <body>
