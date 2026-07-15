@@ -703,14 +703,25 @@ nav{
 .feat3-copy h2{font-size:clamp(30px,4vw,44px);color:#FFF8EC;margin-bottom:18px;max-width:13ch}
 .feat3-copy h2 em{font-style:italic;color:#FFF8EC}
 .feat3-copy p{color:rgba(255,248,236,.9);font-size:clamp(18px,1.75vw,21px);max-width:460px;line-height:1.6}
+/* desktop keeps the pinned walk-through: the pager row collapses to just the dots */
+.feat3-pager{display:contents}
+.f3-arrow{display:none}
 .feat3-prog{position:absolute;left:3px;bottom:34px;display:flex;gap:8px;align-items:center;z-index:2}
 .feat3-prog b{width:7px;height:7px;border-radius:999px;background:rgba(255,248,236,.35);transition:width .3s,background .3s}
 .feat3-prog b.on{width:22px;background:#FFF8EC}
 @media(max-width:880px){
-  .feat3-scroll{height:390vh}
-  .feat3-pin{height:auto;min-height:100svh;padding-top:56px}
+  /* no scroll pin — the section sits in normal flow so you can just scroll past it,
+     and the screens are paged by swiping the card instead */
+  .feat3-scroll{height:auto}
+  .feat3-pin{position:static;height:auto;min-height:0;padding:50px 0 4px}
   .feat3-stage{display:flex;flex-direction:column}
-  .feat3-pin .feat3-head2{display:block;margin-bottom:18px}
+  /* the header pins under the nav exactly like .tvb2-head ("Set your triggers"): same
+     top/z-index/background/padding. Negative side margins bleed the cream bg to the wrap
+     edges (tvb2-head IS the wrap; this one sits inside it), so the card scrolls cleanly under. */
+  .feat3-pin .feat3-head2{
+    display:block;position:sticky;top:68px;z-index:7;background:var(--bg);
+    margin:0 -24px 18px;padding:6px 24px 14px;
+  }
   .feat3-pin .feat3-sub{margin-top:4px;font-size:15px}
   .feat3-head2--out{display:none}
   .feat3-sub{margin-top:6px;font-size:16px}
@@ -718,12 +729,29 @@ nav{
   .feat3-phone{position:static;transform:none;display:flex;justify-content:center;align-items:flex-start;margin-top:-46px;margin-bottom:0;height:462px;overflow:visible}
   .feat3 .phone{width:300px;transform:scale(.72);transform-origin:top center}
   .feat3 .screen{height:596px}
-  .feat3-copy{position:relative;top:auto;bottom:auto;right:auto;width:auto;min-height:158px;padding:0 20px 6px;text-align:center}
-  .feat3-copy .f3{align-items:center;justify-content:flex-start;padding-top:18px}
+  /* the phone screens become a real snapping strip you drag with your finger */
+  .feat3-screens{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .feat3-screens::-webkit-scrollbar{display:none}
+  .feat3-screen{position:relative;inset:auto;flex:0 0 100%;min-width:0;height:100%;overflow:hidden;opacity:1;transition:none;scroll-snap-align:start;scroll-snap-stop:always}
+  .feat3-copy{position:relative;top:auto;bottom:auto;right:auto;width:auto;min-height:204px;padding:0 20px 6px;text-align:center}
+  .feat3-copy .f3{align-items:center;justify-content:flex-start;padding-top:52px}
   .feat3-copy h2{max-width:none;font-size:22px;margin-bottom:8px}
   .feat3-copy p{margin:0 auto;font-size:15.5px;line-height:1.5;max-width:310px}
-  .feat3-prog{position:static;justify-content:center;margin-top:10px;padding-bottom:4px}
   .feat3-copy .kicker{justify-content:center}
+  /* pager — the "how it works" foot pattern carried onto the olive card: bare elongated
+     arrows (no button chrome) flanking dots whose active one grows into a brand pill */
+  .feat3-pager{display:flex;align-items:center;justify-content:center;gap:8px;height:38px;position:relative;z-index:3}
+  .f3-arrow{
+    display:grid;place-items:center;flex:none;width:38px;height:38px;padding:0;
+    border:0;background:none;color:#FFF8EC;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;transition:transform .15s ease,opacity .25s ease;
+  }
+  .f3-arrow svg{width:18px;height:18px}
+  .f3-arrow:active{transform:scale(.9)}
+  .f3-arrow:disabled{opacity:.3;cursor:default}
+  .feat3-prog{position:static;justify-content:center;gap:7px}
+  .feat3-prog b{width:6px;height:6px;background:#FFF8EC;opacity:.45;transition:width .4s cubic-bezier(.4,0,.2,1),background .4s,opacity .4s}
+  .feat3-prog b.on{width:24px;background:var(--brand);opacity:1}
 }
 @media (prefers-reduced-motion:reduce){
   .feat3-scroll{height:auto}
@@ -1366,7 +1394,11 @@ footer{background:var(--text);color:#D9CFC6;padding:64px 0 40px;font-size:14.5px
             <h2>Your food history <em>over time</em></h2>
             <p>Look back on how your list changes as you go.</p>
           </div>
-          <div class="feat3-prog" id="feat3Prog" aria-hidden="true"><b class="on"></b><b></b><b></b><b></b></div>
+          <div class="feat3-pager" id="feat3Pager">
+            <button class="f3-arrow f3-arrow--prev" type="button" aria-label="Previous screen"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 8h-10M7 4.5l-3.5 3.5 3.5 3.5"/></svg></button>
+            <div class="feat3-prog" id="feat3Prog" aria-hidden="true"><b class="on"></b><b></b><b></b><b></b></div>
+            <button class="f3-arrow f3-arrow--next" type="button" aria-label="Next screen"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 8h10M9 4.5l3.5 3.5-3.5 3.5"/></svg></button>
+          </div>
         </div>
         </div>
         </div>
@@ -1614,34 +1646,95 @@ document.querySelectorAll('.rv').forEach(el => io.observe(el));
   let rt; addEventListener('resize',()=>{clearTimeout(rt); rt=setTimeout(build,200);});
 })();
 
-/* features — pinned: change the phone screen + the copy as you scroll through the 3 steps */
+/* features — desktop: pinned, the screen + copy change as you scroll through the 4 steps.
+   mobile: no pin, the section scrolls past normally and the screens are paged by swipe/arrows. */
 (function(){
   const scroll=document.getElementById('feat3Scroll');
   if(!scroll) return;
+  const card=document.querySelector('.feat3-card');
+  const strip=document.querySelector('.feat3-screens');
   const screens=[...document.querySelectorAll('.feat3-screen')];
   const copies=[...document.querySelectorAll('#feat3Copy .f3')];
   const prog=[...document.querySelectorAll('#feat3Prog b')];
+  const prevBtn=document.querySelector('.f3-arrow--prev');
+  const nextBtn=document.querySelector('.f3-arrow--next');
   const N=screens.length;
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  let ticking=false,cur=-1;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const mob=matchMedia('(max-width:880px)');
+  let cur=-1;
+
+  function setIdx(idx){
+    idx=Math.max(0,Math.min(N-1,idx));
+    if(idx===cur) return;
+    cur=idx;
+    screens.forEach((s,i)=>s.classList.toggle('active',i===idx));
+    copies.forEach((c,i)=>c.classList.toggle('active',i===idx));
+    prog.forEach((d,i)=>d.classList.toggle('on',i===idx));
+    if(prevBtn) prevBtn.disabled=idx===0;
+    if(nextBtn) nextBtn.disabled=idx===N-1;
+  }
+
+  /* ---- mobile: the strip's own scroll position is the source of truth ---- */
+  // scrollTo({behavior:'smooth'}) is silently dropped inside the scaled phone, which left the
+  // index moving while the strip stayed put — so tween scrollLeft by hand, snap off while it runs.
+  let anim=null;
+  function goTo(i){
+    const w=strip.clientWidth; if(!w) return;
+    i=Math.max(0,Math.min(N-1,i));
+    setIdx(i);
+    if(anim) cancelAnimationFrame(anim);
+    const from=strip.scrollLeft, to=i*w;
+    if(reduce||from===to){ strip.scrollLeft=to; anim=null; strip.style.scrollSnapType=''; return; }
+    strip.style.scrollSnapType='none';
+    const t0=performance.now(), dur=400;
+    (function step(now){
+      const k=Math.min(1,(now-t0)/dur);
+      strip.scrollLeft=from+(to-from)*(1-Math.pow(1-k,3));
+      if(k<1){ anim=requestAnimationFrame(step); }
+      else { anim=null; strip.style.scrollSnapType=''; }
+    })(t0);
+  }
+  let stripTick=false;
+  strip.addEventListener('scroll',()=>{
+    if(!mob.matches||anim||stripTick||!strip.clientWidth) return;
+    stripTick=true;
+    requestAnimationFrame(()=>{ stripTick=false; setIdx(Math.round(strip.scrollLeft/strip.clientWidth)); });
+  },{passive:true});
+  if(prevBtn) prevBtn.addEventListener('click',()=>goTo(cur-1));
+  if(nextBtn) nextBtn.addEventListener('click',()=>goTo(cur+1));
+
+  // swiping the green card outside the phone pages it too, so the whole band reads as swipeable
+  let sx=0,sy=0,swiping=false;
+  card.addEventListener('touchstart',e=>{
+    if(!mob.matches||e.target.closest('.feat3-screens')) return;
+    swiping=true; sx=e.touches[0].clientX; sy=e.touches[0].clientY;
+  },{passive:true});
+  card.addEventListener('touchend',e=>{
+    if(!swiping) return;
+    swiping=false;
+    const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>44&&Math.abs(dx)>Math.abs(dy)*1.4) goTo(cur+(dx<0?1:-1));
+  },{passive:true});
+
+  /* ---- desktop: vertical scroll through the pinned stage ---- */
+  let ticking=false;
   // iOS: innerHeight breathes as the Safari bars collapse; re-mapping progress to it
   // makes states flip mid-scroll. Freeze the height, refresh only on real resizes.
   let vhStable=innerHeight;
   addEventListener('resize',()=>{ if(Math.abs(innerHeight-vhStable)>150) vhStable=innerHeight; });
   function update(){
     ticking=false;
+    if(mob.matches||reduce) return;
     const total=scroll.offsetHeight-vhStable;
     const scrolled=Math.min(Math.max(-scroll.getBoundingClientRect().top,0),total);
     const p=total>0?scrolled/total:0;
-    const idx=Math.min(N-1,Math.floor(p*N+1e-6));
-    if(idx!==cur){ cur=idx;
-      screens.forEach((s,i)=>s.classList.toggle('active',i===idx));
-      copies.forEach((c,i)=>c.classList.toggle('active',i===idx));
-      prog.forEach((d,i)=>d.classList.toggle('on',i===idx));
-    }
+    setIdx(Math.min(N-1,Math.floor(p*N+1e-6)));
   }
   function onScroll(){ if(!ticking){ticking=true;requestAnimationFrame(update);} }
-  addEventListener('scroll',onScroll,{passive:true}); addEventListener('resize',onScroll); update();
+  addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',onScroll);
+  mob.addEventListener('change',()=>{ cur=-1; if(mob.matches){ strip.scrollLeft=0; setIdx(0); } else update(); });
+  setIdx(0); update();
 })();
 
 /* flip cards — tap to flip on touch / click (hover handles desktop) */
