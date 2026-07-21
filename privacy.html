@@ -31,9 +31,7 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-BCPC4NGBF8', { anonymize_ip: true });
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
 <style>
 :root{--bg:#FFFDF8;--brand:#D4882A;--text:#54453A;--text-muted:#7A6B5E;--text-placeholder:#A89B8E;--surface:#FFFFFF;--border:#E8E2DA;--link:#877C73;--serif:'Bitter',Georgia,serif;--sans:'Source Sans 3',-apple-system,sans-serif;--r-button:15px;}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -70,7 +68,7 @@ footer{background:var(--text);color:#D9CFC6;padding:40px 0;font-size:14px}
 </div></nav>
 <main class="doc"><div class="wrap">
   <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: May 12, 2026</p>
+  <p class="updated">Last updated: July 20, 2026</p>
       <p>We are Rio, made by Anastasiia Kirzhanova, a sole proprietor (Einzelunternehmerin) operating under the business name Soba Apps in Berlin, Germany.</p>
       <p>This Privacy Policy explains what we do with your personal information when you use the Rio mobile app or visit riofoodplan.com.</p>
       <p>If you don&#x27;t agree with how we handle your data, please don&#x27;t use Rio.</p>
@@ -79,9 +77,9 @@ footer{background:var(--text);color:#D9CFC6;padding:40px 0;font-size:14px}
       <h3>What we collect:</h3>
       <p>Your email, your quiz answers and food settings (which include information about your health), your personal notes, and basic device information. The website also uses Google Analytics.</p>
       <h3>Your health information:</h3>
-      <p>When you take the quiz, you tell us about your symptoms and food reactions. This is sensitive data, so we ask for your specific permission before we use it. That is what the consent checkbox at sign-up is for.</p>
+      <p>When you take the quiz, you tell us about your symptoms and food reactions. This is sensitive data, so we ask for your specific permission before we use it. That is what the consent checkbox before the quiz is for.</p>
       <h3>Where your data is stored:</h3>
-      <p>On servers in the European Union.</p>
+      <p>On servers in the European Union. If you try Rio as a guest, your answers stay on your device until you create an account.</p>
       <h3>Who we share it with:</h3>
       <p>Only the service providers that help us run Rio. No advertisers. No data brokers. We don&#x27;t sell your information and we don&#x27;t use it to train AI.</p>
       <h3>Your rights:</h3>
@@ -106,9 +104,11 @@ footer{background:var(--text);color:#D9CFC6;padding:40px 0;font-size:14px}
       <li>Personal notes you write about foods</li>
       </ul>
       <p>All of this is stored in your Rio account on servers in the European Union, so it stays available when you sign in on a new device. Only you can see it inside the app, and you can delete all of it from Profile → Delete account at any time.</p>
+      <p>If you use Rio as a guest (without an account), your quiz answers and food list are stored only on your device, not on our servers. They move into your account if you create one later. To remove guest data, delete the app.</p>
       <p>When you contact us:</p>
       <ul>
       <li>Whatever you write in emails to hello@riofoodplan.com</li>
+      <li>Your name, email, and message when you use the support form on riofoodplan.com</li>
       </ul>
       <h3>What we collect automatically</h3>
       <p>In the mobile app: device type, operating system, app version, IP address (for security and approximate location), crash reports, and which features you use (to improve Rio).</p>
@@ -119,8 +119,8 @@ footer{background:var(--text);color:#D9CFC6;padding:40px 0;font-size:14px}
       <p>Your quiz answers, food tolerance settings, and personal notes are about your body and how it reacts to food. Under European law (GDPR Article 9), this is &quot;special category data&quot;. Similar rules exist elsewhere: Washington&#x27;s My Health My Data Act, California&#x27;s &quot;sensitive personal information&quot; rules, Canada&#x27;s PIPEDA, and Brazil&#x27;s LGPD.</p>
       <p>This kind of data deserves extra care, so we ask for your specific permission before we collect any of it. You give us that permission by:</p>
       <ol>
-      <li>Ticking the &quot;I consent to Rio using my health-related answers&quot; checkbox when you sign up</li>
-      <li>Accepting these terms when you create your account</li>
+      <li>Ticking the &quot;I consent to Rio using my health-related answers&quot; checkbox on the consent screen shown before the quiz</li>
+      <li>Accepting the Terms of Service and this Privacy Policy on the same screen</li>
       </ol>
       <h3>What we use this data for:</h3>
       <p>Building your personal food list and recommendations inside Rio.</p>
@@ -161,6 +161,8 @@ footer{background:var(--text);color:#D9CFC6;padding:40px 0;font-size:14px}
       <li>Website analytics providers for riofoodplan.com only (currently Google Analytics)</li>
       <li>App analytics providers for the mobile app (currently PostHog, hosted in the European Union) — to understand which features are used and improve Rio. They process only non-health usage events under a data processing agreement and never receive your quiz answers, tolerance settings, or notes.</li>
       <li>Crash and error diagnostics providers (currently Sentry, hosted in the European Union) — to detect and fix crashes and errors. They receive only technical diagnostics (stack traces, device and app version), never your email, quiz answers, tolerance settings, or notes.</li>
+      <li>Email delivery providers (currently SendGrid) — to send account emails such as verification codes, password-reset codes, and welcome messages. They handle your email address and the content of these messages, never your quiz answers, settings, or notes.</li>
+      <li>Support-form processing for riofoodplan.com (currently Web3Forms) — relays your name, email, and message from the website&#x27;s support form to us.</li>
       <li>App distribution (Apple App Store)</li>
       </ul>
       <p>These providers may change over time as we improve Rio. We will keep using only providers that meet GDPR and equivalent data protection requirements.</p>
@@ -170,12 +172,13 @@ footer{background:var(--text);color:#D9CFC6;padding:40px 0;font-size:14px}
       <h2>7. Where your data is stored and international transfers</h2>
       <p>Your data is stored on servers in the European Union.</p>
       <p>If you use Rio from outside the European Economic Area (EEA), your data is transferred to and processed in the EU. By using Rio, you consent to this transfer.</p>
-      <p>Some providers (such as Apple and Google) operate globally. When data moves outside the EU, it is protected by Standard Contractual Clauses approved by the European Commission, plus the EU-US Data Privacy Framework where it applies.</p>
+      <p>Some providers (such as Apple, Google, and our email delivery provider) operate globally. When data moves outside the EU, it is protected by Standard Contractual Clauses approved by the European Commission, plus the EU-US Data Privacy Framework where it applies.</p>
       <p>Your health data does not leave the EU/EEA.</p>
       <h2>8. How long we keep your data</h2>
       <ul>
       <li>While your account is active: as long as you have an account</li>
       <li>After account deletion: removed from active systems within 30 days</li>
+      <li>Usage analytics after deletion: analytics events never contain your health data (see section 9) and are stored under a random identifier. Once your account is deleted, they are no longer connected to your email or any other account details.</li>
       <li>Backups: may retain data for up to 90 days before being permanently erased</li>
       <li>Tax and legal records: kept longer when required by law (typically up to 7 years for tax records under German law)</li>
       </ul>
@@ -183,12 +186,11 @@ footer{background:var(--text);color:#D9CFC6;padding:40px 0;font-size:14px}
       <h2>9. Cookies, analytics, and tracking</h2>
       <h3>In the Rio mobile app:</h3>
       <p>No web cookies, no advertising SDKs, no cross-app tracking, no use of Apple&#x27;s advertising identifier (IDFA).</p>
-      <p>We use privacy-friendly product analytics (currently PostHog, hosted in the EU) to understand in-app usage and improve Rio. It records only non-health events, never your quiz answers, settings, or notes, and does not use advertising identifiers or track you across other apps. You can turn this off at any time in Profile → Account → Let Rio learn from how you use it.</p>
-      <p>We also use a crash-reporting tool (currently Sentry, EU-hosted) that records technical diagnostics when the app crashes — stack traces and device info only, never your personal or health data.</p>
-      <p>You can turn this off at any time in Profile → Account → &quot;Let Rio learn from how you use it&quot;. When the switch is off, no analytics events are sent from your device. This does not affect the data we store on your behalf to run your account (see section 1).</p>
+      <p>We use privacy-friendly product analytics (currently PostHog, hosted in the EU) to understand in-app usage and improve Rio. It records only non-health events, never your quiz answers, settings, or notes, and does not use advertising identifiers or track you across other apps. You can turn this off at any time in Profile → Account → &quot;Let Rio learn from how you use it&quot;. When the switch is off, no analytics events are sent from your device. This does not affect the data we store on your behalf to run your account (see section 1).</p>
+      <p>We also use a crash-reporting tool (currently Sentry, EU-hosted) that records technical diagnostics when the app crashes — stack traces and device info only, never your personal or health data. Crash reporting stays on regardless of the analytics switch: it is how we find and fix crashes, and the reports carry no personal or health data.</p>
       <h3>On riofoodplan.com:</h3>
       <p>Essential cookies (to keep the site working) and Google Analytics (to understand how visitors use the site). Analytics data is aggregated and not used to identify you personally.</p>
-      <p>You can opt out of Google Analytics through the Google Analytics Opt-Out Browser Add-on (tools.google.com/dlpage/gaoptout), through your browser&#x27;s privacy settings, or by enabling Do-Not-Track. We may add a cookie consent banner on the website; until then, by using the site you accept these cookies.</p>
+      <p>Google Analytics loads only if you accept it in the cookie banner on your first visit. You can withdraw that choice at any time through the banner&#x27;s cookie settings or by clearing the site&#x27;s cookies in your browser, and you can additionally use the Google Analytics Opt-Out Browser Add-on (tools.google.com/dlpage/gaoptout).</p>
       <h2>10. Sign in with Apple and Sign in with Google</h2>
       <p>When you use Sign in with Apple or Google, they send us only what we need to create your account: a unique sign-in identifier and your email (or a relay email if you choose Apple&#x27;s &quot;Hide My Email&quot;).</p>
       <p>We never see your password. We never see your activity on Apple or Google. Their privacy policies cover that side: apple.com/legal/privacy and policies.google.com/privacy.</p>
@@ -197,14 +199,14 @@ footer{background:var(--text);color:#D9CFC6;padding:40px 0;font-size:14px}
       <p>Rio is for users 16 and older. If we discover we have collected data from someone under 16, we will deactivate the account and delete the data. In the United States, we also comply with the Children&#x27;s Online Privacy Protection Act (COPPA) and do not knowingly collect data from children under 13.</p>
       <p>If you believe we have collected data from a child, email hello@riofoodplan.com.</p>
       <h2>12. How we keep your data safe</h2>
-      <p>We use industry-standard security measures, including encryption in transit and at rest, access controls, and audit logging.</p>
+      <p>We use industry-standard security measures, including encryption in transit and at rest, and strict access controls.</p>
       <p>No system is 100% secure. If a data breach puts your personal data at risk, we will notify the data protection authority (in Germany: Berliner Beauftragte für Datenschutz) within 72 hours, as required by GDPR Article 33, and notify you directly without delay if the breach is likely to seriously affect you (Article 34). Equivalent rules apply in other jurisdictions where they exist.</p>
       <h2>13. How to delete your account or make a privacy request</h2>
       <h3>Inside the Rio app:</h3>
       <ul>
-      <li>Edit your account: Profile, Settings</li>
-      <li>Adjust your health settings: Settings, Your food tolerance / Food exclusions</li>
-      <li>Delete your account: Profile, Settings, Delete account (your data leaves our active systems within 30 days)</li>
+      <li>Manage your account: the Profile tab (export your data, sign out, delete your account)</li>
+      <li>Adjust your health settings: tap the active-triggers card above your food list to change tolerance levels, or tap any food to change its color or remove an exclusion</li>
+      <li>Delete your account: Profile tab → Delete account (your data leaves our active systems within 30 days)</li>
       </ul>
       <h3>By email:</h3>
       <p>Send a request to hello@riofoodplan.com. We will acknowledge within 5 business days and respond fully within 30 days (45 days for some US states). We may need to verify your identity.</p>
@@ -223,7 +225,7 @@ footer{background:var(--text);color:#D9CFC6;padding:40px 0;font-size:14px}
       <p>Email hello@riofoodplan.com with &quot;California Request&quot; to exercise these rights.</p>
       <h3>Washington (My Health My Data Act)</h3>
       <p>Washington residents have additional rights under the My Health My Data Act (MHMDA) over their consumer health data (your quiz answers, symptoms, food intolerance information, and notes in Rio): to confirm whether we are collecting, sharing, or selling it; to access it and learn which third parties have received it; to withdraw consent; and to delete it (including from our backups).</p>
-      <p>What we want you to know: we obtain your explicit consent before collecting your consumer health data (the checkbox at sign-up), we never sell it, we never share it with third parties for advertising or marketing, and we do not use geofencing technology around healthcare facilities.</p>
+      <p>What we want you to know: we obtain your explicit consent before collecting your consumer health data (the consent checkbox before the quiz), we never sell it, we never share it with third parties for advertising or marketing, and we do not use geofencing technology around healthcare facilities.</p>
       <p>Email hello@riofoodplan.com with &quot;Washington Request&quot; to exercise these rights.</p>
       <h3>Other US states</h3>
       <p>If you live in another US state with a comprehensive privacy law (such as Colorado, Connecticut, Texas, Virginia, and others), you may have similar rights: access, correction, deletion, portability, opting out of targeted advertising or sale (we don&#x27;t do either), and limiting use of sensitive data. Email hello@riofoodplan.com to exercise these rights.</p>
@@ -231,7 +233,7 @@ footer{background:var(--text);color:#D9CFC6;padding:40px 0;font-size:14px}
       <p>You still have the rights described in this Privacy Policy. Local laws may give you additional rights, including under Canada&#x27;s PIPEDA and Quebec&#x27;s Law 25, Australia&#x27;s Privacy Act 1988, New Zealand&#x27;s Privacy Act 2020, and Brazil&#x27;s LGPD.</p>
       <p>To exercise these rights, email hello@riofoodplan.com.</p>
       <h2>17. Do Not Track</h2>
-      <p>Some browsers and operating systems have a &quot;Do Not Track&quot; setting. There is no agreed standard for how apps should respond. The Rio mobile app does not track you across sites, so this setting does not apply. The riofoodplan.com website respects Do-Not-Track signals where technically feasible, and you can opt out of Google Analytics as described in section 9.</p>
+      <p>Some browsers and operating systems have a &quot;Do Not Track&quot; setting. There is no agreed standard for how apps should respond. The Rio mobile app does not track you across sites, so this setting does not apply. On riofoodplan.com, analytics loads only with your consent (see section 9), whatever this setting says.</p>
       <h2>18. Changes to this policy</h2>
       <p>We may update this policy from time to time. The updated version will have a new &quot;Last updated&quot; date at the top. For material changes, we will notify you in the app or by email at least 30 days before they take effect. Continued use of Rio after that means you accept the updated policy.</p>
       <h2>19. Contact us</h2>
