@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Rio · Email preferences</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;500;600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFFDF8; --surface: #FFFFFF; --text: #54453A; --heading: #3E332B;
+    --muted: #7A6B5E; --soft: #A89B8E; --button: #6A5A4E; --brand: #D4882A;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+         font-family:"Source Sans 3",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif; }
+  .wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px 18px; }
+  .card { width:100%; max-width:430px; background:var(--surface); border-radius:24px;
+          box-shadow:0 8px 24px rgba(84,69,58,0.10); padding:48px 34px 44px; text-align:center; }
+  .logo { width:72px; height:72px; border-radius:50%; display:block; margin:0 auto; }
+  h1 { font-family:"Bitter",Georgia,serif; font-weight:600; font-size:25px; line-height:1.3;
+       color:var(--heading); margin:26px 0 0; }
+  p { font-size:17px; line-height:1.6; color:var(--muted); margin:14px 0 0; }
+  .btn { display:inline-block; margin:30px 0 0; background:var(--button); color:#FFFFFF;
+         font-size:17px; font-weight:600; border:none; border-radius:15px; padding:16px 34px;
+         cursor:pointer; font-family:inherit; transition:transform .15s ease, opacity .15s ease; }
+  .btn:active { transform:scale(0.97); opacity:0.8; }
+  .btn[disabled] { opacity:0.45; cursor:default; }
+  .foot { margin:26px 0 0; font-size:14px; color:var(--soft); }
+  .hidden { display:none; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <img class="logo" src="https://ctewtltiwdhjbgcushzu.supabase.co/storage/v1/object/public/assets/rio-logo-v6.png" alt="Rio" width="72" height="72" />
+
+      <div id="state-confirm-subscribe" class="hidden">
+        <h1>Subscribe to Rio updates</h1>
+        <p>One tap to confirm. Every email we send carries an unsubscribe link.</p>
+        <button class="btn" id="btn-subscribe" type="button">Confirm</button>
+        <p class="foot">Not you? Just close this page — nothing happens without the tap.</p>
+      </div>
+
+      <div id="state-confirm-unsubscribe" class="hidden">
+        <h1>Unsubscribe from Rio product updates?</h1>
+        <p>You'll keep receiving account emails such as verification codes — those are part of the service.</p>
+        <button class="btn" id="btn-unsubscribe" type="button">Unsubscribe</button>
+        <p class="foot">Changed your mind? Just close this page.</p>
+      </div>
+
+      <div id="state-subscribed" class="hidden">
+        <h1>You're subscribed</h1>
+        <p>Occasional updates about the Rio app will land in this inbox. Every one of them carries an unsubscribe link.</p>
+      </div>
+
+      <div id="state-unsubscribed" class="hidden">
+        <h1>You're unsubscribed</h1>
+        <p>No more product-update emails. Account emails such as verification codes keep working — those are part of the service.</p>
+      </div>
+
+      <div id="state-invalid" class="hidden">
+        <h1>This link is no longer valid</h1>
+        <p>If you wanted to change your email settings, write to <a href="mailto:hello@riofoodplan.com" style="color:#877C73;">hello@riofoodplan.com</a> and we'll sort it out.</p>
+      </div>
+
+      <div id="state-error" class="hidden">
+        <h1>Something went wrong</h1>
+        <p>Nothing was changed. Please try again in a minute, or write to <a href="mailto:hello@riofoodplan.com" style="color:#877C73;">hello@riofoodplan.com</a>.</p>
+      </div>
+    </div>
+  </div>
+
+<script>
+(function () {
+  // The page is the UI; the state change happens in the Supabase edge function
+  // `newsletter` (service_role-only RPC behind it). HTML can't be served from
+  // *.supabase.co (forced text/plain), so the page lives here and POSTs across.
+  var ENDPOINT = "https://ctewtltiwdhjbgcushzu.supabase.co/functions/v1/newsletter";
+  var UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+  var params = new URLSearchParams(location.search);
+  var action = params.get("action");
+  var token = params.get("token") || "";
+
+  function show(id) {
+    ["state-confirm-subscribe","state-confirm-unsubscribe","state-subscribed",
+     "state-unsubscribed","state-invalid","state-error"].forEach(function (s) {
+      document.getElementById(s).classList.toggle("hidden", s !== id);
+    });
+  }
+
+  if ((action !== "subscribe" && action !== "unsubscribe") || !UUID_RE.test(token)) {
+    show("state-invalid");
+    return;
+  }
+  show(action === "subscribe" ? "state-confirm-subscribe" : "state-confirm-unsubscribe");
+
+  function confirm(btn) {
+    btn.disabled = true;
+    // form-urlencoded keeps this a "simple" CORS request — no preflight needed.
+    fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: "action=" + encodeURIComponent(action) + "&token=" + encodeURIComponent(token)
+    }).then(function (r) {
+      if (!r.ok && r.status !== 404) throw new Error("http " + r.status);
+      return r.json();
+    }).then(function (data) {
+      var result = data && data.result;
+      if (result === "subscribed") show("state-subscribed");
+      else if (result === "unsubscribed") show("state-unsubscribed");
+      else show("state-invalid");
+    }).catch(function () {
+      btn.disabled = false;
+      show("state-error");
+    });
+  }
+
+  document.getElementById("btn-subscribe").addEventListener("click", function () { confirm(this); });
+  document.getElementById("btn-unsubscribe").addEventListener("click", function () { confirm(this); });
+})();
+</script>
+</body>
+</html>
