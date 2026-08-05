@@ -23,9 +23,10 @@
   h1 { font-family:"Bitter",Georgia,serif; font-weight:600; font-size:25px; line-height:1.3;
        color:var(--heading); margin:26px 0 0; }
   p { font-size:17px; line-height:1.6; color:var(--muted); margin:14px 0 0; }
-  .btn { display:inline-block; margin:30px 0 0; background:var(--button); color:#FFFFFF;
-         font-size:17px; font-weight:600; border:none; border-radius:15px; padding:16px 34px;
-         cursor:pointer; font-family:inherit; transition:transform .15s ease, opacity .15s ease; }
+  .btn { display:inline-block; margin:28px 0 0; background:var(--button); color:#FFFFFF;
+         font-size:16px; font-weight:600; border:none; border-radius:13px; padding:12px 24px;
+         cursor:pointer; font-family:inherit; transition:transform .15s ease, opacity .15s ease;
+         -webkit-appearance:none; appearance:none; }
   .btn:active { transform:scale(0.97); opacity:0.8; }
   .btn[disabled] { opacity:0.45; cursor:default; }
   .foot { margin:26px 0 0; font-size:14px; color:var(--soft); }
@@ -41,19 +42,16 @@
         <h1>Subscribe to Rio updates</h1>
         <p>One tap to confirm. Every email we send carries an unsubscribe link.</p>
         <button class="btn" id="btn-subscribe" type="button">Confirm</button>
-        <p class="foot">Not you? Just close this page — nothing happens without the tap.</p>
       </div>
 
       <div id="state-confirm-unsubscribe" class="hidden">
         <h1>Unsubscribe from Rio product updates?</h1>
         <p>You'll keep receiving account emails such as verification codes — those are part of the service.</p>
         <button class="btn" id="btn-unsubscribe" type="button">Unsubscribe</button>
-        <p class="foot">Changed your mind? Just close this page.</p>
       </div>
 
       <div id="state-subscribed" class="hidden">
         <h1>You're subscribed</h1>
-        <p>Occasional updates about the Rio app will land in this inbox. Every one of them carries an unsubscribe link.</p>
       </div>
 
       <div id="state-unsubscribed" class="hidden">
