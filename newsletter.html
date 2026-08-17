@@ -19,7 +19,7 @@
   .wrap { min-height:100vh; min-height:100svh; display:flex; align-items:center; justify-content:center; padding:24px 18px 12vh; }
   .card { width:100%; max-width:430px; background:var(--surface); border-radius:24px;
           box-shadow:0 8px 24px rgba(84,69,58,0.10); padding:48px 34px 44px; text-align:center; }
-  .logo { width:72px; height:72px; border-radius:50%; display:block; margin:0 auto; }
+  .logo { width:48px; height:48px; border-radius:50%; display:block; margin:0 auto; }
   h1 { font-family:"Bitter",Georgia,serif; font-weight:600; font-size:25px; line-height:1.3;
        color:var(--heading); margin:26px 0 0; }
   p { font-size:17px; line-height:1.6; color:var(--muted); margin:14px 0 0; }
@@ -30,24 +30,25 @@
   .btn:active { transform:scale(0.97); opacity:0.8; }
   .btn[disabled] { opacity:0.45; cursor:default; }
   .foot { margin:26px 0 0; font-size:14px; color:var(--soft); }
+  .resub { margin:26px 0 0; font-size:14px; color:#A89B8E; }
+  .resub a { color:#7E9140; font-weight:600; text-decoration:underline; text-underline-offset:2px; }
   .hidden { display:none; }
 </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <img class="logo" src="https://ctewtltiwdhjbgcushzu.supabase.co/storage/v1/object/public/assets/rio-logo-v6.png" alt="Rio" width="72" height="72" />
+      <img class="logo" src="https://ctewtltiwdhjbgcushzu.supabase.co/storage/v1/object/public/assets/rio-logo-v6.png" alt="Rio" width="48" height="48" />
 
       <div id="state-confirm-subscribe" class="hidden">
         <h1>Subscribe to Rio updates</h1>
-        <p>One tap to confirm. Every email we send carries an unsubscribe link.</p>
+        <p>One tap to confirm.</p>
         <button class="btn" id="btn-subscribe" type="button">Confirm</button>
       </div>
 
       <div id="state-confirm-unsubscribe" class="hidden">
-        <h1>Unsubscribe from Rio product updates?</h1>
-        <p>You'll keep receiving account emails such as verification codes — those are part of the service.</p>
-        <button class="btn" id="btn-unsubscribe" type="button">Unsubscribe</button>
+        <h1>Do you want to unsubscribe?</h1>
+        <button class="btn" id="btn-unsubscribe" type="button">Confirm</button>
       </div>
 
       <div id="state-subscribed" class="hidden">
@@ -56,7 +57,13 @@
 
       <div id="state-unsubscribed" class="hidden">
         <h1>You're unsubscribed</h1>
-        <p>No more product-update emails. Account emails such as verification codes keep working — those are part of the service.</p>
+        <p>No more product-update emails.</p>
+        <p class="resub">Changed your mind? <a href="#" id="link-resubscribe">Resubscribe</a></p>
+      </div>
+
+      <div id="state-resubscribed" class="hidden">
+        <h1>You're subscribed again</h1>
+        <p>You'll keep getting Rio product updates.</p>
       </div>
 
       <div id="state-invalid" class="hidden">
@@ -81,44 +88,65 @@
 
   var params = new URLSearchParams(location.search);
   var action = params.get("action");
-  var token = params.get("token") || "";
+  // Held in memory across the visit: unsubscribing ROTATES the token server-side, and
+  // the response hands the fresh one back so Resubscribe can work. A reload replays the
+  // URL's retired token and correctly lands on state-invalid — that is by design.
+  var currentToken = params.get("token") || "";
 
+  var STATES = ["state-confirm-subscribe","state-confirm-unsubscribe","state-subscribed",
+     "state-unsubscribed","state-resubscribed","state-invalid","state-error"];
   function show(id) {
-    ["state-confirm-subscribe","state-confirm-unsubscribe","state-subscribed",
-     "state-unsubscribed","state-invalid","state-error"].forEach(function (s) {
+    STATES.forEach(function (s) {
       document.getElementById(s).classList.toggle("hidden", s !== id);
     });
   }
 
-  if ((action !== "subscribe" && action !== "unsubscribe") || !UUID_RE.test(token)) {
+  if ((action !== "subscribe" && action !== "unsubscribe") || !UUID_RE.test(currentToken)) {
     show("state-invalid");
     return;
   }
   show(action === "subscribe" ? "state-confirm-subscribe" : "state-confirm-unsubscribe");
 
-  function confirm(btn) {
-    btn.disabled = true;
+  function post(act, onDone, onFail) {
     // form-urlencoded keeps this a "simple" CORS request — no preflight needed.
     fetch(ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: "action=" + encodeURIComponent(action) + "&token=" + encodeURIComponent(token)
+      body: "action=" + encodeURIComponent(act) + "&token=" + encodeURIComponent(currentToken)
     }).then(function (r) {
       if (!r.ok && r.status !== 404) throw new Error("http " + r.status);
       return r.json();
     }).then(function (data) {
-      var result = data && data.result;
-      if (result === "subscribed") show("state-subscribed");
-      else if (result === "unsubscribed") show("state-unsubscribed");
-      else show("state-invalid");
-    }).catch(function () {
-      btn.disabled = false;
-      show("state-error");
-    });
+      if (data && typeof data.token === "string" && UUID_RE.test(data.token)) {
+        currentToken = data.token;
+      }
+      onDone(data && data.result);
+    }).catch(function () { onFail(); });
   }
 
-  document.getElementById("btn-subscribe").addEventListener("click", function () { confirm(this); });
-  document.getElementById("btn-unsubscribe").addEventListener("click", function () { confirm(this); });
+  document.getElementById("btn-subscribe").addEventListener("click", function () {
+    var btn = this; btn.disabled = true;
+    post("subscribe",
+      function (result) { show(result === "subscribed" ? "state-subscribed" : "state-invalid"); },
+      function () { btn.disabled = false; show("state-error"); });
+  });
+
+  document.getElementById("btn-unsubscribe").addEventListener("click", function () {
+    var btn = this; btn.disabled = true;
+    post("unsubscribe",
+      function (result) { show(result === "unsubscribed" ? "state-unsubscribed" : "state-invalid"); },
+      function () { btn.disabled = false; show("state-error"); });
+  });
+
+  document.getElementById("link-resubscribe").addEventListener("click", function (e) {
+    e.preventDefault();
+    var link = this;
+    if (link.dataset.busy) return;      // double-click guard, same job as btn.disabled
+    link.dataset.busy = "1";
+    post("subscribe",
+      function (result) { show(result === "subscribed" ? "state-resubscribed" : "state-invalid"); },
+      function () { delete link.dataset.busy; show("state-error"); });
+  });
 })();
 </script>
 </body>
