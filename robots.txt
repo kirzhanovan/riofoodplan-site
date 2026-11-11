@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+# /r/ and /l/ (shared recipes and lists) are deliberately not disallowed: their pages and
+# responses say noindex, and a crawler only sees that if it may fetch them. A disallowed URL
+# that is linked somewhere can still be listed by its address alone.
 
 Sitemap: https://riofoodplan.com/sitemap.xml
